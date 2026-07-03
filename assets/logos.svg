@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <!-- INOWI wordmark : Space Grotesk bold, letter-spacing serré, point orange -->
+  <symbol id="logo-inowi" viewBox="0 0 220 60">
+    <text x="10" y="42" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="36" letter-spacing="-1.5" fill="currentColor">INOWI</text>
+    <circle cx="196" cy="38" r="5" fill="#E8590C"/>
+  </symbol>
+
+  <!-- Maîtrise Avenir : deux lignes, thin + bold, filet en dessous -->
+  <symbol id="logo-ma" viewBox="0 0 260 60">
+    <text x="10" y="26" font-family="'Space Grotesk',sans-serif" font-weight="400" font-size="16" letter-spacing="2" fill="currentColor" opacity=".65">MAÎTRISE</text>
+    <text x="10" y="50" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="24" letter-spacing="-.5" fill="currentColor">AVENIR</text>
+    <rect x="130" y="42" width="80" height="2" fill="#E8590C"/>
+  </symbol>
+
+  <!-- Clever Cloud : le "cloud" iconique + wordmark -->
+  <symbol id="logo-clever" viewBox="0 0 260 60">
+    <!-- pictogramme nuage stylisé (approximation officielle) -->
+    <g transform="translate(6,14)" fill="currentColor">
+      <path d="M28,4 C22,4 17,8 15,13 C13,12 11,11.5 9,11.5 C4,11.5 0,15.5 0,20.5 C0,25.5 4,29.5 9,29.5 L32,29.5 C37,29.5 41,25.5 41,20.5 C41,17.5 39.5,14.8 37.2,13.3 C36.5,8 32.8,4 28,4 Z"/>
+    </g>
+    <text x="60" y="27" font-family="'Space Grotesk',sans-serif" font-weight="500" font-size="15" letter-spacing="0.5" fill="currentColor" opacity=".65">Clever</text>
+    <text x="60" y="48" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="22" letter-spacing="-.3" fill="currentColor">Cloud</text>
+  </symbol>
+</svg>

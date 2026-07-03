@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contact - AIMC</title>
+<meta name="description" content="Écrire à l'AI Makers Club - LinkedIn, email, newsletter.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header" data-header></header>
+
+<section class="page-hero">
+ <div class="container">
+ <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span>Contact</div>
+ <h1>Écrivez-nous.</h1>
+ <p class="lead">On répond en 48h max - pas de bot, pas de formulaire perdu. LinkedIn reste le canal prioritaire pour rester au courant.</p>
+ </div>
+</section>
+
+<section class="paper">
+ <div class="container">
+ <div class="grid-2">
+
+ <div>
+ <form class="contact-form" onsubmit="event.preventDefault();alert('Formulaire de démo - à connecter à un vrai backend (HelloAsso, Formspree, Notion API...) avant mise en ligne.');">
+ <div class="row">
+ <label>Nom</label>
+ <input type="text" required placeholder="Prénom Nom">
+ </div>
+ <div class="row">
+ <label>Email</label>
+ <input type="email" required placeholder="vous@email.fr">
+ </div>
+ <div class="row">
+ <label>Sujet</label>
+ <input type="text" required placeholder="Adhésion / Partenariat / Autre">
+ </div>
+ <div class="row">
+ <label>Message</label>
+ <textarea required placeholder="Dites-nous en plus…"></textarea>
+ </div>
+ <button type="submit" class="btn">Envoyer →</button>
+ </form>
+ </div>
+
+ <div class="contact-side">
+ <h3>Autres canaux</h3>
+
+ <div class="channel">
+ <strong>■ LinkedIn (prioritaire)</strong>
+ <a href="#">@aimc-club</a>
+ </div>
+
+ <div class="channel">
+ <strong>■ Email</strong>
+ <a href="mailto:hello@aimc.dev">hello@aimc.dev</a>
+ </div>
+
+ <div class="channel">
+ <strong>■ Presse</strong>
+ <a href="mailto:presse@aimc.dev">presse@aimc.dev</a>
+ </div>
+
+ <div class="channel">
+ <strong>■ Partenariats</strong>
+ <a href="mailto:partenaires@aimc.dev">partenaires@aimc.dev</a>
+ </div>
+
+ <div class="channel">
+ <strong>■ Newsletter</strong>
+ <a href="contenu.html#newsletter">S'abonner →</a>
+ </div>
+ </div>
+
+ </div>
+
+ <div class="newsletter" style="margin-top:64px;">
+ <div class="kicker">Newsletter mensuelle</div>
+ <h3>5 vraies infos IA par mois - sans hype.</h3>
+ <p>Zéro annonce de modèle vue et revue. Zéro « révolutionner ». Ce qui compte pour les builders, un envoi par mois, période.</p>
+ <form onsubmit="event.preventDefault();alert('Formulaire de démo - à connecter à Buttondown, Listmonk ou Substack avant mise en ligne.');">
+ <input type="email" placeholder="votre@email.fr" required>
+ <button type="submit" class="btn">S'abonner</button>
+ </form>
+ </div>
+
+ </div>
+</section>
+
+<div class="cta-sticky"><a href="adherer.html" class="btn btn-lime">Adhérer →</a></div>
+
+<footer class="site-footer" data-footer></footer>
+
+<script src="assets/partials.js"></script>
+
+<script>
+function submitAimcContact(e) {
+  e.preventDefault();
+  const form = document.getElementById('contact-form');
+  const btn = form.querySelector('button');
+  const orig = btn.textContent;
+  btn.textContent = 'Envoi...';
+  btn.disabled = true;
+
+  const data = {
+    prenom: form.querySelector('input[placeholder="Prénom"]')?.value || '',
+    tel: form.querySelector('input[type="tel"]')?.value || '',
+    email: form.querySelector('input[type="email"]')?.value || '',
+    sujet: form.querySelector('input[placeholder*="Sujet"]')?.value || '',
+    message: form.querySelector('textarea')?.value || '',
+    _hp: '', // honeypot field (if added later)
+    _ts: Date.now(),
+  };
+
+  fetch('/api/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  .then(r => r.json())
+  .then(res => {
+    if (res.success) {
+      form.innerHTML = '<p style="font-family:Space Grotesk,sans-serif;font-size:24px;font-weight:700;color:var(--ink);">Merci ! On vous répond sous 48h.</p>';
+    } else {
+      btn.textContent = orig;
+      btn.disabled = false;
+      alert(res.error || 'Erreur. Réessayez.');
+    }
+  })
+  .catch(() => {
+    btn.textContent = orig;
+    btn.disabled = false;
+    alert('Erreur réseau. Réessayez.');
+  });
+
+  return false;
+}
+</script>
+
+</body>
+</html>

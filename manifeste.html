@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Le manifeste - AIMC</title>
+<meta name="description" content="On parle beaucoup d'IA. Nous, on la fait tourner. Le manifeste de l'AI Makers Club.">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-header" data-header></header>
+
+<section class="manifest-body">
+ <div class="container">
+
+ <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.15em;color:var(--lime);margin-bottom:32px;">§ LE MANIFESTE - V1</div>
+
+ <h1>Ceux qui font.</h1>
+
+ <p><strong>On parle beaucoup d'IA. Nous, on la fait tourner.</strong></p>
+
+ <p>Il y a ceux qui commentent les annonces de modèles, et ceux qui les mettent à l'épreuve : dans des agents, du RAG, des workflows métiers, des homelabs, des prototypes qui plantent à 2h du matin et qu'on répare.</p>
+
+ <p>L'AI Makers Club fédère ces builders francophones. Des profils techniques, créatifs, métiers, chercheurs, indépendants - pas des tech-bros, pas des néophytes : des éclaireurs.</p>
+
+ <h2>■ Ce qu'on fait</h2>
+
+ <p>On montre nos démos. On documente ce qui marche - et ce qui ne marche pas. On compare les outils sans religion de cloud ni de modèle. On transmet à ceux qui arrivent. On construit des ponts propres avec les entreprises, la recherche et les institutions.</p>
+
+ <h2>■ Ce qu'on n'est pas</h2>
+
+ <div class="neg-block banner-neg" id="neg-banner-m">
+ <div class="kicker" style="color:var(--lime);margin-bottom:24px;">§ Ce qu'on n'est pas</div>
+ <p class="neg" id="neg-list-m">
+ <span class="neg-line" data-i="0">Pas un cabinet de conseil déguisé.</span>
+ <span class="neg-line" data-i="1">Pas un lobby.</span>
+ <span class="neg-line" data-i="2">Pas un groupe Telegram transformé en logo.</span>
+ <span class="neg-line" data-i="3">Pas là pour vendre du rêve.</span>
+ </p>
+ </div>
+
+ <h2>■ Notre conviction</h2>
+
+ <p>L'IA ne se comprend pas dans les benchmarks marketing. Elle se comprend sur le terrain : <strong>coûts réels, latence réelle, limites réelles, usages réels.</strong> C'est là qu'on est.</p>
+
+ <p>La souveraineté n'est pas un slogan. Elle se mesure dans la capacité à faire tourner, maintenir, évaluer et comprendre les systèmes. C'est ce qu'on pratique.</p>
+
+ <h2>■ Ce qu'on veut construire</h2>
+
+ <p>Un espace où les personnes qui font réellement peuvent : montrer leurs démos, partager leurs retours, comparer les outils, documenter les résultats, tester des modèles, transmettre aux nouveaux entrants, rencontrer chercheurs et partenaires, et construire des formats utiles - ateliers, hackathons, benchmarks, rapports, demo days.</p>
+
+ <p>L'objectif n'est pas de produire un énième discours sur l'IA. L'objectif est de structurer les compétences terrain, rendre visibles les builders, produire des preuves.</p>
+
+ <h2>■ Rejoignez-nous</h2>
+
+ <p style="margin-bottom:48px;"><strong>Si vous construisez, testez, documentez, mesurez - cet endroit est le vôtre.</strong></p>
+
+ <div style="display:flex;gap:16px;flex-wrap:wrap;">
+ <a href="adherer.html" class="btn btn-lime">Adhérer →</a>
+ <a href="bureau.html" class="btn btn-ghost">Rencontrer le bureau</a>
+ </div>
+
+ </div>
+</section>
+
+<div class="cta-sticky"><a href="adherer.html" class="btn btn-lime">Adhérer →</a></div>
+
+<footer class="site-footer" data-footer></footer>
+
+<script src="assets/partials.js"></script>
+<script>
+// Cascade scroll animation for manifeste neg-block (same as index.html)
+(function(){
+ const negList = document.getElementById('neg-list-m');
+ if(!negList) return;
+ const lines = [...negList.querySelectorAll('.neg-line')];
+ const banner = document.getElementById('neg-banner-m');
+ const setActive = (idx) => {
+ lines.forEach((el,i) => {
+ el.classList.remove('active','past','dim-1','dim-2');
+ if(i === idx){ el.classList.add('active'); }
+ else if(i < idx){ el.classList.add('past'); }
+ else{
+ const d = i - idx;
+ if(d === 1) el.classList.add('dim-2');
+ else if(d === 2) el.classList.add('dim-1');
+ }
+ });
+ };
+ setActive(0);
+ const onScroll = () => {
+ const rect = banner.getBoundingClientRect();
+ const vh = window.innerHeight;
+ const total = rect.height + vh;
+ const seen = vh - rect.top;
+ const p = Math.max(0, Math.min(1, seen / total));
+ const eased = Math.max(0, Math.min(1, (p - 0.15) / 0.70));
+ const idx = Math.min(lines.length - 1, Math.floor(eased * lines.length));
+ setActive(idx);
+ };
+ let ticking = false;
+ window.addEventListener('scroll', () => {
+ if(!ticking){
+ requestAnimationFrame(() => { onScroll(); ticking = false; });
+ ticking = true;
+ }
+ }, {passive:true});
+ onScroll();
+})();
+</script>
+</body>
+</html>
