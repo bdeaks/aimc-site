@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIMC — Mini board DA V3</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C0C0A;
+  --paper:#FAF7F2;
+  --beige:#EBE4D3;
+  --lime:#B6FF00;
+  --orange:#E8590C;
+  --blue:#1E5A8A;
+  --red:#E63946;
+  --text:#1C1B18;
+  --mute:#8A8580;
+  --rule:#D9D3C6;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Inter",system-ui,sans-serif;background:var(--paper);color:var(--text);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+.mono{font-family:"IBM Plex Mono",monospace;}
+.grot{font-family:"Space Grotesk",sans-serif;}
+
+.container{max-width:1280px;margin:0 auto;padding:64px 48px;}
+
+/* HEADER — dark regime */
+.dark-header{background:var(--ink);color:var(--paper);padding:24px 48px;
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.05em;}
+.dark-header .lime{color:var(--lime);}
+.dark-header .brand{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em;}
+.dark-header .brand::after{content:"■";color:var(--lime);margin-left:6px;font-size:14px;}
+
+/* SECTION */
+.section{padding:48px 0;border-bottom:1px solid var(--rule);}
+.section h2{font-family:"Space Grotesk",sans-serif;font-size:12px;font-weight:600;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--mute);margin-bottom:32px;}
+.section h2::before{content:"§";color:var(--orange);margin-right:8px;}
+
+/* COLOR CARDS */
+.palette{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.swatch{aspect-ratio:1/1;border-radius:0;padding:16px;display:flex;flex-direction:column;
+  justify-content:space-between;font-family:"IBM Plex Mono",monospace;font-size:11px;
+  border:1px solid var(--rule);}
+.swatch .role{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.05em;}
+.swatch .hex{font-size:11px;opacity:.85;}
+.swatch .use{font-size:10px;line-height:1.4;font-family:"Inter",sans-serif;opacity:.75;}
+
+.sw-ink{background:var(--ink);color:var(--paper);}
+.sw-paper{background:var(--paper);color:var(--text);}
+.sw-beige{background:var(--beige);color:var(--text);}
+.sw-lime{background:var(--lime);color:var(--ink);}
+.sw-orange{background:var(--orange);color:var(--paper);}
+.sw-blue{background:var(--blue);color:var(--paper);}
+.sw-red{background:var(--red);color:var(--paper);}
+.sw-mute{background:var(--mute);color:var(--paper);}
+
+/* TYPOGRAPHY SPECIMEN */
+.type-specimen{display:grid;grid-template-columns:180px 1fr;gap:24px;margin-bottom:32px;
+  padding-bottom:32px;border-bottom:1px dashed var(--rule);}
+.type-specimen:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0;}
+.type-label{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);
+  letter-spacing:.05em;padding-top:4px;}
+.type-label strong{display:block;color:var(--text);font-weight:600;font-size:12px;
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;}
+.type-h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:88px;line-height:.95;
+  letter-spacing:-.03em;color:var(--ink);}
+.type-h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:44px;line-height:1.05;
+  letter-spacing:-.02em;color:var(--ink);}
+.type-h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:26px;line-height:1.15;
+  letter-spacing:-.01em;color:var(--ink);}
+.type-body{font-family:"Inter",sans-serif;font-size:17px;line-height:1.6;color:var(--text);max-width:560px;}
+.type-mono{font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.55;color:var(--text);}
+.type-tag{font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  background:var(--lime);padding:4px 10px;display:inline-block;}
+
+/* COMPONENT PREVIEW */
+.components{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+.comp{padding:24px;border:1px solid var(--rule);background:var(--paper);}
+.comp-label{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:12px;}
+.comp h3{font-family:"Space Grotesk",sans-serif;font-size:22px;font-weight:600;margin-bottom:12px;letter-spacing:-.01em;}
+
+/* CTA button */
+.btn{display:inline-block;background:var(--orange);color:var(--paper);
+  font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;padding:14px 24px;
+  text-decoration:none;transition:all .2s;}
+.btn:hover{background:var(--ink);color:var(--lime);}
+.btn-outline{background:transparent;color:var(--ink);border:1px solid var(--ink);}
+.btn-outline:hover{background:var(--ink);color:var(--paper);}
+
+/* Boot log */
+.bootlog{background:var(--ink);color:var(--paper);padding:24px;font-family:"IBM Plex Mono",monospace;font-size:12px;line-height:1.7;}
+.bootlog .prompt{color:var(--lime);}
+.bootlog .comment{color:var(--mute);}
+.bootlog .err{color:var(--red);}
+
+/* Manifesto banner */
+.banner-manifest{background:var(--ink);color:var(--paper);padding:64px 48px;text-align:left;}
+.banner-manifest .neg{font-family:"IBM Plex Mono",monospace;font-size:24px;line-height:1.4;color:var(--lime);}
+.banner-manifest .neg span{color:var(--paper);opacity:.5;}
+
+/* Content card */
+.card-content{background:var(--paper);border:1px solid var(--rule);padding:20px;}
+.card-content .tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--ink);background:var(--lime);padding:3px 8px;display:inline-block;margin-bottom:12px;}
+.card-content h4{font-family:"Space Grotesk",sans-serif;font-size:20px;line-height:1.2;
+  font-weight:600;letter-spacing:-.01em;margin-bottom:8px;}
+.card-content .meta{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--mute);letter-spacing:.05em;}
+
+/* Note */
+.note{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--mute);line-height:1.6;margin-top:16px;}
+
+/* Ratio bar */
+.ratio{display:flex;height:48px;margin-top:24px;border:1px solid var(--rule);}
+.ratio > div{display:flex;align-items:center;justify-content:center;
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.05em;}
+.r-paper{flex:60;background:var(--paper);color:var(--text);}
+.r-ink{flex:25;background:var(--ink);color:var(--paper);}
+.r-lime{flex:8;background:var(--lime);color:var(--ink);}
+.r-orange{flex:7;background:var(--orange);color:var(--paper);}
+</style>
+</head>
+<body>
+
+<!-- DARK HEADER (signature "machine") -->
+<div class="dark-header">
+  <div>
+    <span class="lime">$</span> BOOT: aimc.dev v0.1.0 · <span class="lime">READY.</span>
+  </div>
+  <div class="brand">AIMC</div>
+  <div>
+    <span class="comment" style="opacity:.5;">2026-07-03</span> · <span class="lime">MINI-BOARD</span> V3
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Intro -->
+  <div class="section" style="border:0;padding-top:32px;padding-bottom:32px;">
+    <h2>Direction artistique V3 — hybride</h2>
+    <div class="type-h1">Deux régimes,<br>une seule voix.</div>
+    <p class="type-body" style="margin-top:24px;">Le corps du site en régime <strong>clair</strong> (papier crème, lecture confortable) — les bordures d'identité en régime <strong>sombre</strong> (header, footer, bandeaux manifeste, terminal). Le logo AIMC est la charnière : il vit dans le sombre, il annonce le clair.</p>
+    <div class="ratio">
+      <div class="r-paper">60% PAPIER</div>
+      <div class="r-ink">25% ENCRE</div>
+      <div class="r-lime">8% LIME</div>
+      <div class="r-orange">7% ORANGE</div>
+    </div>
+    <p class="note">Ratio indicatif de surface visible sur l'ensemble du site. Le noir ne doit jamais dépasser 30 % sinon le régime bascule.</p>
+  </div>
+
+  <!-- Palette -->
+  <div class="section">
+    <h2>01 · Palette</h2>
+    <div class="palette">
+      <div class="swatch sw-ink">
+        <div><span class="role">Encre</span></div>
+        <div>
+          <div class="hex">#0C0C0A</div>
+          <div class="use">Header, footer, bandeaux manifeste, boot log</div>
+        </div>
+      </div>
+      <div class="swatch sw-paper">
+        <div><span class="role">Papier</span></div>
+        <div>
+          <div class="hex">#FAF7F2</div>
+          <div class="use">Fond des pages, lecture longue</div>
+        </div>
+      </div>
+      <div class="swatch sw-beige">
+        <div><span class="role">Beige rétro</span></div>
+        <div>
+          <div class="hex">#EBE4D3</div>
+          <div class="use">Titre logo, cartes sombres, texte sur ink</div>
+        </div>
+      </div>
+      <div class="swatch sw-lime">
+        <div><span class="role">Lime phosphore</span></div>
+        <div>
+          <div class="hex">#B6FF00</div>
+          <div class="use">Signature identité, tags, curseur ■, ready state</div>
+        </div>
+      </div>
+      <div class="swatch sw-orange">
+        <div><span class="role">Orange atelier</span></div>
+        <div>
+          <div class="hex">#E8590C</div>
+          <div class="use">CTA, liens, énergie maker sur régime clair</div>
+        </div>
+      </div>
+      <div class="swatch sw-blue">
+        <div><span class="role">Bleu de travail</span></div>
+        <div>
+          <div class="hex">#1E5A8A</div>
+          <div class="use">Tags secondaires, éléments UI froids</div>
+        </div>
+      </div>
+      <div class="swatch sw-red">
+        <div><span class="role">Rouge glitch</span></div>
+        <div>
+          <div class="hex">#E63946</div>
+          <div class="use">Accents rares, erreurs, alerte, hover glitch</div>
+        </div>
+      </div>
+      <div class="swatch sw-mute">
+        <div><span class="role">Mute</span></div>
+        <div>
+          <div class="hex">#8A8580</div>
+          <div class="use">Légendes, métadonnées, séparateurs</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">→ #B6FF00 lime : réservé aux moments "identité" (header brand ■, tags, points d'attention, boot log). Jamais en corps de texte.<br>
+    → #E8590C orange : le CTA principal. Sur fond ink il devient très saturé — utiliser lime à la place dans le sombre.</p>
+  </div>
+
+  <!-- Typography -->
+  <div class="section">
+    <h2>02 · Typographie</h2>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>Space Grotesk</strong>Bold 88px<br>Titres H1 &amp; masthead</div>
+      <div class="type-h1">Ceux qui font.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>Space Grotesk</strong>SemiBold 44px<br>Titres H2 &amp; sections</div>
+      <div class="type-h2">L'IA se comprend sur le terrain.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>Space Grotesk</strong>SemiBold 26px<br>H3 &amp; cartes contenu</div>
+      <div class="type-h3">Documenter ce qui marche — et ce qui ne marche pas.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>Inter</strong>Regular 17px / 1.6<br>Corps de texte, manifeste, articles</div>
+      <div class="type-body">Il y a ceux qui commentent les annonces de modèles, et ceux qui les mettent à l'épreuve : dans des agents, du RAG, des workflows métiers, des homelabs, des prototypes qui plantent à 2h du matin et qu'on répare. L'AIMC fédère ces builders francophones.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>IBM Plex Mono</strong>Regular 13px<br>Boot log, folios, métadonnées, code</div>
+      <div class="type-mono">$ init aimc.membership --profile=builder<br>&gt; loading modules... [OK]<br>&gt; connecting nodes... [OK]<br>&gt; ready.</div>
+    </div>
+
+    <div class="type-specimen">
+      <div class="type-label"><strong>IBM Plex Mono</strong>Bold 11px<br>Tags &amp; kickers</div>
+      <div>
+        <span class="type-tag">Démo</span>
+        <span class="type-tag" style="background:var(--blue);color:var(--paper);">Retour terrain</span>
+        <span class="type-tag" style="background:var(--orange);color:var(--paper);">Benchmark</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Components -->
+  <div class="section">
+    <h2>03 · Composants clés</h2>
+
+    <div class="components">
+
+      <!-- Boot log -->
+      <div class="comp" style="padding:0;">
+        <div class="bootlog">
+<span class="comment"># header identité (haut de chaque page)</span><br>
+<span class="prompt">$</span> BOOT: aimc.dev v0.1.0<br>
+&gt; initializing system...<br>
+&gt; loading modules ......... <span class="prompt">[OK]</span><br>
+&gt; connecting nodes ........ <span class="prompt">[OK]</span><br>
+&gt; homelab, agent, local ... <span class="prompt">READY.</span>
+        </div>
+        <div style="padding:16px;">
+          <div class="comp-label">Composant · Boot log</div>
+          <p style="font-size:13px;color:var(--mute);">Header identité, s'affiche une fois par page en top-left. Signature reconnaissable. Ne se répète pas.</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="comp">
+        <div class="comp-label">Composant · CTA primaire</div>
+        <a href="#" class="btn">Adhérer</a>
+        &nbsp;
+        <a href="#" class="btn btn-outline">Lire le manifeste →</a>
+        <p style="font-size:13px;color:var(--mute);margin-top:20px;">Orange atelier plein pour CTA principal. Contour ink pour secondaire. Hover : primaire → ink+lime. Label mono uppercase.</p>
+      </div>
+
+      <!-- Card content -->
+      <div class="comp">
+        <div class="comp-label">Composant · Carte contenu</div>
+        <div class="card-content">
+          <span class="tag">Retour terrain</span>
+          <h4>RAG local sur MacBook M4 : 8 semaines, 12 K€ économisés.</h4>
+          <div class="meta">2026-07-01 · 6 min · @philippe_baudoux</div>
+        </div>
+      </div>
+
+      <!-- Manifest banner -->
+      <div class="comp" style="padding:0;">
+        <div class="banner-manifest" style="padding:32px 24px;">
+          <div class="neg">
+            Pas un cabinet<br>de conseil déguisé.<br>
+            <span>Pas un lobby.</span><br>
+            <span>Pas un groupe Telegram<br>transformé en logo.</span>
+          </div>
+        </div>
+        <div style="padding:16px;">
+          <div class="comp-label">Composant · Bandeau manifeste</div>
+          <p style="font-size:13px;color:var(--mute);">Ponctuation forte tout au long du site. Assertions négatives en mono lime, atténuation progressive vers le mute.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Motto en action -->
+  <div class="section">
+    <h2>04 · Motto en action</h2>
+    <p class="note" style="margin-bottom:24px;">Deux mises en situation du même motto — régime clair (accueil) et régime sombre (bandeau).</p>
+
+    <!-- Version clair -->
+    <div style="background:var(--paper);border:1px solid var(--rule);padding:64px 48px;margin-bottom:16px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background-image:radial-gradient(var(--rule) 1px, transparent 1px);background-size:20px 20px;opacity:.35;"></div>
+      <div style="position:relative;">
+        <div class="type-tag" style="margin-bottom:24px;">Accueil · Hero</div>
+        <div class="type-h1">Ceux qui font.</div>
+        <p class="type-body" style="margin-top:24px;font-size:20px;color:var(--mute);">L'IA par ceux qui la construisent — démos, benchmarks, retours terrain.</p>
+        <div style="margin-top:32px;">
+          <a href="#" class="btn">Adhérer</a>
+          &nbsp;
+          <a href="#" class="btn btn-outline">Lire le manifeste →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Version sombre -->
+    <div style="background:var(--ink);color:var(--paper);padding:64px 48px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--lime);margin-bottom:24px;">§ MANIFESTE</div>
+      <div class="type-h1" style="color:var(--beige);">Ceux qui font.</div>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:15px;line-height:1.65;color:var(--paper);opacity:.75;margin-top:24px;max-width:560px;">
+        On parle beaucoup d'IA. Nous, on la fait tourner. Pas de discours. Pas de benchmarks marketing. Des démos réelles, du RAG, des agents, des homelabs, des retours honnêtes.
+      </p>
+      <div style="margin-top:32px;">
+        <a href="#" class="btn" style="background:var(--lime);color:var(--ink);">Rejoindre →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Do's / Don'ts -->
+  <div class="section">
+    <h2>05 · Règles fermes</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+      <div>
+        <div class="comp-label" style="color:var(--lime);background:var(--ink);padding:6px 10px;display:inline-block;">✓ On fait</div>
+        <ul style="list-style:none;margin-top:16px;font-size:14px;line-height:1.8;">
+          <li>■ Photos réelles des membres, événements, homelabs</li>
+          <li>■ Assertions négatives ("Pas un…") comme motif récurrent</li>
+          <li>■ Boot log + timestamps mono comme signature</li>
+          <li>■ Tag lime carré pour les catégories de contenu</li>
+          <li>■ Orange saturé sur régime clair, lime sur régime sombre</li>
+          <li>■ Trame grille papier millimétré en filigrane léger</li>
+        </ul>
+      </div>
+      <div>
+        <div class="comp-label" style="color:var(--paper);background:var(--red);padding:6px 10px;display:inline-block;">✗ On ne fait pas</div>
+        <ul style="list-style:none;margin-top:16px;font-size:14px;line-height:1.8;">
+          <li>✗ Dégradés violets, cerveaux lumineux, robots</li>
+          <li>✗ Stock IA-générique / illustrations abstraites</li>
+          <li>✗ Full black sur plus de 30 % de la surface</li>
+          <li>✗ Sans-serif générique (Roboto, Open Sans, Poppins…)</li>
+          <li>✗ "Révolutionner", "disrupter", "libérer le potentiel"</li>
+          <li>✗ Emojis en corps de contenu (mono ■ ou ✓ oui)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:64px;padding:32px 0;border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mute);">
+    <span style="color:var(--lime);">$</span> mini-board.aimc.v3 · Hutch @ iMac INOWI · 2026-07-03 · <span style="color:var(--orange);">next :</span> HTML prototype landing
+  </div>
+
+</div>
+
+</body>
+</html>
