@@ -142,6 +142,14 @@
  onScroll();
  }
 
+ // Scroll reveal — fade-in sections au scroll
+ const revealEls = document.querySelectorAll('.pilier,.card-content,.plan,.lab-card,.pilier,.faq-item');
+ revealEls.forEach(el => el.classList.add('reveal'));
+ const revealObs = new IntersectionObserver((entries) => {
+ entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
+ }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
+ revealEls.forEach(el => revealObs.observe(el));
+
  // FAQ accordion
  document.querySelectorAll('.faq-item').forEach(item => {
  item.addEventListener('click', () => item.classList.toggle('open'));
