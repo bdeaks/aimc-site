@@ -1,0 +1,210 @@
+/* ============================================================================
+   AIMC MOTION SYSTEM v1
+   ---------------------------------------------------------------------------
+   "Chaque animation trace le geste d'un builder qui écrit du code :
+    terminal, précis, jamais gratuit."
+
+   Doc : ~/Projects/aimc-site/MOTION-PLAN.md
+   Chargement : après style.css, avant partials.js
+   ============================================================================ */
+
+:root {
+  /* Durées signature */
+  --t-short: 200ms;    /* Hover, focus, feedback immédiat */
+  --t-med: 500ms;      /* Reveal cards, fade contents */
+  --t-long: 600ms;     /* Path draw, underline, cursor sweep */
+  --t-hero: 800ms;     /* Hero draw, scan CRT bandeau négatif */
+
+  /* Easing signature (ease-out-expo, terminal-like) */
+  --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Blink binaire pour curseur */
+  --step-cursor: steps(1);
+}
+
+/* ============================================================================
+   PRIMITIVE A — terminal-line
+   Trait lime horizontal qui se dessine gauche→droite.
+   Usage : kickers, séparateurs, hover cards.
+   ============================================================================ */
+
+.terminal-line {
+  display: inline-block;
+  height: 1px;
+  width: 0;
+  background: #B6FF00;
+  transition: width var(--t-long) var(--ease-signature);
+  vertical-align: middle;
+}
+.terminal-line.visible {
+  width: 40px;
+}
+
+/* Version SVG stroke draw (pour éléments plus complexes) */
+.line-draw {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: line-draw-anim var(--t-long) var(--ease-signature) forwards;
+}
+@keyframes line-draw-anim {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ============================================================================
+   PRIMITIVE B — cursor-blink
+   Bloc lime qui bat comme un curseur terminal.
+   Usage : tagline header, loaders, "processing".
+   ============================================================================ */
+
+.cursor-blink {
+  display: inline-block;
+  width: 10px;
+  height: 1em;
+  background: #B6FF00;
+  vertical-align: middle;
+  margin-left: 4px;
+  animation: cursor-blink-anim 1.06s var(--step-cursor) infinite;
+}
+@keyframes cursor-blink-anim {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Variante caret fin */
+.cursor-caret {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #B6FF00;
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: cursor-blink-anim 1.06s var(--step-cursor) infinite;
+}
+
+/* ============================================================================
+   PRIMITIVE C — content-reveal
+   translateY(20px) + fade + border-left lime au reveal, stagger.
+   Usage : grilles piliers, contenu, bureau, lab.
+   ============================================================================ */
+
+.reveal-term {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--t-med) var(--ease-signature),
+    transform var(--t-med) var(--ease-signature);
+  will-change: transform, opacity;
+}
+.reveal-term.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-term.visible {
+  will-change: auto;
+}
+
+/* Version card avec border-left lime signature */
+.card-reveal {
+  border-left: 2px solid transparent;
+  transition:
+    opacity var(--t-med) var(--ease-signature),
+    transform var(--t-med) var(--ease-signature),
+    border-left-color var(--t-med) var(--ease-signature) 200ms;
+}
+.card-reveal.visible {
+  border-left-color: #B6FF00;
+}
+
+/* Stagger via nth-child (0, 100, 200, 300ms delays) */
+.stagger-terminal > *:nth-child(1) { transition-delay: 0ms; }
+.stagger-terminal > *:nth-child(2) { transition-delay: 100ms; }
+.stagger-terminal > *:nth-child(3) { transition-delay: 200ms; }
+.stagger-terminal > *:nth-child(4) { transition-delay: 300ms; }
+.stagger-terminal > *:nth-child(5) { transition-delay: 400ms; }
+.stagger-terminal > *:nth-child(6) { transition-delay: 500ms; }
+
+/* ============================================================================
+   PRIMITIVE D — neg-cascade
+   Scan CRT lime qui traverse une ligne une seule fois.
+   Usage : bandeau négatif "Ce qu'on n'est pas".
+   ============================================================================ */
+
+.neg-cascade {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.neg-cascade::before {
+  content: '';
+  position: absolute;
+  left: -100%;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(182, 255, 0, 0.12) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+.neg-cascade.active::before {
+  animation: neg-scan-anim var(--t-hero) var(--ease-signature) forwards;
+}
+@keyframes neg-scan-anim {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ============================================================================
+   UTILITAIRE — underline draw pour h2/h3
+   Trait lime 1.5px qui se dessine sous les titres au reveal.
+   ============================================================================ */
+
+.h-underline {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+.h-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 1.5px;
+  background: #B6FF00;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--t-long) var(--ease-signature);
+}
+.h-underline.visible::after {
+  transform: scaleX(1);
+}
+
+/* ============================================================================
+   ACCESSIBILITY — prefers-reduced-motion
+   Coupe TOUTES les animations, montre l'état final immédiatement.
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-line,
+  .cursor-blink,
+  .cursor-caret,
+  .reveal-term,
+  .card-reveal,
+  .h-underline::after,
+  .neg-cascade::before,
+  .line-draw {
+    animation: none !important;
+    transition: none !important;
+  }
+  .terminal-line { width: 40px; }
+  .reveal-term { opacity: 1; transform: none; }
+  .card-reveal { border-left-color: #B6FF00; }
+  .h-underline::after { transform: scaleX(1); }
+  .cursor-blink, .cursor-caret { opacity: 1; animation: none !important; }
+  .neg-cascade::before { display: none; }
+}

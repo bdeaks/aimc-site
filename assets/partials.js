@@ -45,7 +45,7 @@
  <div class="brand-block">
  <a href="index.html" class="brand">AIMC<span class="lime">.</span></a>
  <div class="claim">AI Makers Club,<br>ceux qui font.</div>
- <div class="tagline"><span class="p">${msg[0]}</span> · <span class="ok">${msg[1]}</span></div>
+ <div class="tagline"><span class="p">${msg[0]}</span> · <span class="ok">${msg[1]}</span><span class="cursor-caret" aria-hidden="true"></span></div>
  </div>
  <nav class="nav" id="site-nav">
  ${navHtml}
@@ -149,6 +149,31 @@
  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
  }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
  revealEls.forEach(el => revealObs.observe(el));
+
+ // Motion system — reveal-term, card-reveal, h-underline, neg-cascade, terminal-line
+ // Auto-apply neg-cascade sur les .neg-line existantes (bandeau négatif)
+ document.querySelectorAll('.neg-line').forEach(el => el.classList.add('neg-cascade'));
+
+ const motionEls = document.querySelectorAll('.reveal-term, .card-reveal, .h-underline, .neg-cascade, .terminal-line');
+ const motionObs = new IntersectionObserver((entries) => {
+ entries.forEach(e => {
+ if(e.isIntersecting){
+ if(e.target.classList.contains('neg-cascade')){
+ e.target.classList.add('active');
+ } else {
+ e.target.classList.add('visible');
+ }
+ motionObs.unobserve(e.target);
+ }
+ });
+ }, {threshold:0.35, rootMargin:'0px 0px -60px 0px'});
+ motionEls.forEach(el => motionObs.observe(el));
+
+ // Auto-apply h-underline sur les h2 de sec-head sans opt-out
+ document.querySelectorAll('.sec-head h2:not(.no-underline)').forEach(h => {
+ h.classList.add('h-underline');
+ motionObs.observe(h);
+ });
 
  // FAQ accordion
  document.querySelectorAll('.faq-item').forEach(item => {
