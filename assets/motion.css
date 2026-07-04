@@ -159,6 +159,35 @@
 }
 
 /* ============================================================================
+   HERO — logo draw-in
+   Logo AIMC en SVG unique path, stroke-dashoffset au load.
+   ============================================================================ */
+
+.hero-logo-draw {
+  margin-bottom: 24px;
+}
+
+.hero-logo-draw svg {
+  width: 80px;
+  height: auto;
+  stroke-dasharray: 1662;
+  stroke-dashoffset: 1662;
+  display: block;
+}
+
+.hero-logo-draw svg.hero-drawn {
+  animation: hero-draw-in 1200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  stroke-dashoffset: 0;
+  stroke: #B6FF00;
+}
+
+@keyframes hero-draw-in {
+  0%   { stroke-dashoffset: 1662; }
+  60%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; stroke-opacity: 1; }
+}
+
+/* ============================================================================
    UTILITAIRE — underline draw pour h2/h3
    Trait lime 1.5px qui se dessine sous les titres au reveal.
    ============================================================================ */
