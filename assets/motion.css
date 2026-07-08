@@ -1,33 +1,27 @@
 /* ============================================================================
-   AIMC MOTION SYSTEM v1
+   AIMC MOTION SYSTEM v2 — TAPESTRY
    ---------------------------------------------------------------------------
-   "Chaque animation trace le geste d'un builder qui écrit du code :
-    terminal, précis, jamais gratuit."
-
-   Doc : ~/Projects/aimc-site/MOTION-PLAN.md
-   Chargement : après style.css, avant partials.js
-   ============================================================================ */
+   Style visuel net, structuré, "blueprint technique".
+   Inspiré de thealliance.ai/projects/tapestry (diagrams, pas hero 3D).
+   Suppression des effets CRT/glow/phosphore.
+   === */
 
 :root {
   /* Durées signature */
-  --t-short: 200ms;    /* Hover, focus, feedback immédiat */
-  --t-med: 500ms;      /* Reveal cards, fade contents */
-  --t-long: 600ms;     /* Path draw, underline, cursor sweep */
-  --t-hero: 800ms;     /* Hero draw, scan CRT bandeau négatif */
+  --t-short: 200ms;
+  --t-med: 500ms;
+  --t-long: 600ms;
+  --t-reveal: 800ms;
 
-  /* Easing signature (ease-out-expo, terminal-like) */
+  /* Easing */
   --ease-signature: cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Blink binaire pour curseur */
-  --step-cursor: steps(1);
 }
 
 /* ============================================================================
-   PRIMITIVE A — terminal-line
-   Trait lime horizontal qui se dessine gauche→droite.
-   Usage : kickers, séparateurs, hover cards.
+   PRIMITIVES RÉUTILISABLES
    ============================================================================ */
 
+/* Separator line draw (gauche → droite) */
 .terminal-line {
   display: inline-block;
   height: 1px;
@@ -40,22 +34,7 @@
   width: 40px;
 }
 
-/* Version SVG stroke draw (pour éléments plus complexes) */
-.line-draw {
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
-  animation: line-draw-anim var(--t-long) var(--ease-signature) forwards;
-}
-@keyframes line-draw-anim {
-  to { stroke-dashoffset: 0; }
-}
-
-/* ============================================================================
-   PRIMITIVE B — cursor-blink
-   Bloc lime qui bat comme un curseur terminal.
-   Usage : tagline header, loaders, "processing".
-   ============================================================================ */
-
+/* Cursor blink */
 .cursor-blink {
   display: inline-block;
   width: 10px;
@@ -63,57 +42,35 @@
   background: #B6FF00;
   vertical-align: middle;
   margin-left: 4px;
-  animation: cursor-blink-anim 1.06s var(--step-cursor) infinite;
+  animation: cursor-blink-anim 1.06s steps(1) infinite;
 }
 @keyframes cursor-blink-anim {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
 }
 
-/* Variante caret fin */
-.cursor-caret {
-  display: inline-block;
-  width: 2px;
-  height: 1em;
-  background: #B6FF00;
-  vertical-align: middle;
-  margin-left: 2px;
-  animation: cursor-blink-anim 1.06s var(--step-cursor) infinite;
-}
-
-/* ============================================================================
-   PRIMITIVE C — content-reveal
-   translateY(20px) + fade + border-left lime au reveal, stagger.
-   Usage : grilles piliers, contenu, bureau, lab.
-   ============================================================================ */
-
+/* Fade + translateY reveal */
 .reveal-term {
   opacity: 0;
   transform: translateY(20px);
-  transition:
-    opacity var(--t-med) var(--ease-signature),
-    transform var(--t-med) var(--ease-signature);
+  transition: opacity var(--t-med) var(--ease-signature), transform var(--t-med) var(--ease-signature);
   will-change: transform, opacity;
 }
 .reveal-term.visible {
   opacity: 1;
   transform: translateY(0);
-  will-change: auto;
 }
 
-/* Version card avec border-left lime signature */
+/* Card reveal with left border */
 .card-reveal {
   border-left: 2px solid transparent;
-  transition:
-    opacity var(--t-med) var(--ease-signature),
-    transform var(--t-med) var(--ease-signature),
-    border-left-color var(--t-med) var(--ease-signature) 200ms;
+  transition: opacity var(--t-med) var(--ease-signature), transform var(--t-med) var(--ease-signature), border-left-color var(--t-med) var(--ease-signature) 200ms;
 }
 .card-reveal.visible {
   border-left-color: #B6FF00;
 }
 
-/* Stagger via nth-child (0, 100, 200, 300ms delays) */
+/* Stagger delays container */
 .stagger-terminal > *:nth-child(1) { transition-delay: 0ms; }
 .stagger-terminal > *:nth-child(2) { transition-delay: 100ms; }
 .stagger-terminal > *:nth-child(3) { transition-delay: 200ms; }
@@ -121,76 +78,7 @@
 .stagger-terminal > *:nth-child(5) { transition-delay: 400ms; }
 .stagger-terminal > *:nth-child(6) { transition-delay: 500ms; }
 
-/* ============================================================================
-   PRIMITIVE D — neg-cascade
-   Scan CRT lime qui traverse une ligne une seule fois.
-   Usage : bandeau négatif "Ce qu'on n'est pas".
-   ============================================================================ */
-
-.neg-cascade {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-.neg-cascade::before {
-  content: '';
-  position: absolute;
-  left: -100%;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(182, 255, 0, 0.12) 50%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-.neg-cascade.active::before {
-  animation: neg-scan-anim var(--t-hero) var(--ease-signature) forwards;
-}
-@keyframes neg-scan-anim {
-  0%   { left: -100%; }
-  100% { left: 200%; }
-}
-
-/* ============================================================================
-   HERO — logo draw-in
-   Logo AIMC en SVG unique path, stroke-dashoffset au load.
-   ============================================================================ */
-
-.hero-logo-draw {
-  margin-bottom: 24px;
-}
-
-.hero-logo-draw svg {
-  width: 80px;
-  height: auto;
-  stroke-dasharray: 1662;
-  /* Offset négatif : le trait se dessine dans le sens du tracé (haut-gauche → contour) */
-  stroke-dashoffset: -1662;
-  opacity: 0;
-  display: block;
-}
-
-.hero-logo-draw svg.hero-drawn {
-  animation: hero-draw-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  /* forwards retient la frame 100% (offset 0 + glow) après l'animation */
-}
-
-@keyframes hero-draw-in {
-  0%   { stroke-dashoffset: -1662; opacity: 1; filter: none; }
-  85%  { stroke-dashoffset: 0; filter: none; }
-  100% { stroke-dashoffset: 0; opacity: 1; filter: drop-shadow(0 0 10px rgba(182, 255, 0, 0.35)); }
-}
-
-/* ============================================================================
-   UTILITAIRE — underline draw pour h2/h3
-   Trait lime 1.5px qui se dessine sous les titres au reveal.
-   ============================================================================ */
-
+/* H-underline for headings */
 .h-underline {
   position: relative;
   display: inline-block;
@@ -212,21 +100,273 @@
   transform: scaleX(1);
 }
 
+/* Tracked uppercase legend style */
+.tapestry-legend {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  fill: var(--mute);
+}
+
+/* ============================================================================
+   HERO — logo draw-in (unchanged)
+   ============================================================================ */
+
+.hero-logo-draw {
+  margin-bottom: 24px;
+}
+.hero-logo-draw svg {
+  width: 80px;
+  height: auto;
+  stroke-dasharray: 1662;
+  stroke-dashoffset: -1662;
+  opacity: 0;
+  display: block;
+}
+.hero-logo-draw svg.hero-drawn {
+  animation: hero-draw-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes hero-draw-in {
+  0%   { stroke-dashoffset: -1662; opacity: 1; filter: none; }
+  85%  { stroke-dashoffset: 0; filter: none; }
+  100% { stroke-dashoffset: 0; opacity: 1; filter: drop-shadow(0 0 10px rgba(182, 255, 0, 0.35)); }
+}
+
+/* ============================================================================
+   ILLUS-INDEX — hero network diagram
+   Tapestry style: cards fade in with stagger
+   ============================================================================ */
+
+.illus-index {
+  margin: 32px 0 0;
+  width: 100%;
+  max-width: 640px;
+  position: relative;
+}
+.illus-index svg { width: 100%; height: auto; display: block; }
+
+/* Hub card + 3 mission cards + stats all get a gentle fade-in */
+#illus-crt {
+  animation: tapestry-in 600ms var(--ease-signature) 200ms both;
+}
+@keyframes tapestry-in {
+  0% { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* ============================================================================
+   ILLUS-BUREAU — org chart
+   Links draw in, nodes fade in
+   ============================================================================ */
+
+#illus-bureau {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Connection lines draw */
+#illus-bureau .b-links .bl {
+  stroke-dasharray: 120;
+  stroke-dashoffset: 120;
+  animation: bl-draw 500ms var(--ease-signature) forwards;
+}
+#illus-bureau .bl1 { animation-delay: 400ms; }
+#illus-bureau .bl2 { animation-delay: 450ms; }
+#illus-bureau .bl3 { animation-delay: 500ms; }
+#illus-bureau .bl4 { animation-delay: 550ms; }
+#illus-bureau .bl5 { animation-delay: 600ms; }
+#illus-bureau .bl6 { animation-delay: 650ms; }
+@keyframes bl-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* Labels fade in after links */
+#illus-bureau .blab {
+  opacity: 0;
+  animation: tap-fade-in 300ms ease-out forwards;
+}
+#illus-bureau .bla1 { animation-delay: 700ms; }
+#illus-bureau .bla2 { animation-delay: 750ms; }
+#illus-bureau .bla3 { animation-delay: 800ms; }
+#illus-bureau .bla4 { animation-delay: 850ms; }
+#illus-bureau .bla5 { animation-delay: 900ms; }
+
+@keyframes tap-fade-in {
+  to { opacity: 1; }
+}
+
+/* ============================================================================
+   ILLUS-ADHERER — membership two-panel flow
+   ============================================================================ */
+
+#illus-adherer {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Stamp pop at end */
+#illus-adherer .a-stamp {
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: 380px 330px;
+  animation: stamp-pop 400ms var(--ease-signature) 1500ms forwards;
+}
+@keyframes stamp-pop {
+  0% { opacity: 0; transform: scale(0); }
+  60% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* ============================================================================
+   ILLUS-CONTENU — 3-column content grid
+   ============================================================================ */
+
+#illus-contenu {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* ============================================================================
+   ILLUS-LAB — oscilloscope
+   ============================================================================ */
+
+#illus-lab {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Trace draws */
+#illus-lab .l-trace {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: tap-trace 1500ms var(--ease-signature) 400ms forwards;
+}
+@keyframes tap-trace {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ============================================================================
+   ILLUS-PARTENAIRES — two-panel network
+   ============================================================================ */
+
+#illus-partenaires {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* ============================================================================
+   ILLUS-CONTACT — sender/receiver flow
+   ============================================================================ */
+
+#illus-contact {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* ============================================================================
+   ILLUS-JOBS — git log
+   ============================================================================ */
+
+#illus-jobs {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Lines type in from top */
+#illus-jobs .jl {
+  clip-path: inset(0 100% 0 0);
+  animation: j-type 300ms steps(30, end) forwards;
+}
+#illus-jobs .jl1 { animation-delay: 300ms; }
+#illus-jobs .jl2 { animation-delay: 360ms; }
+#illus-jobs .jl3 { animation-delay: 420ms; }
+#illus-jobs .jl4 { animation-delay: 480ms; }
+#illus-jobs .jl5 { animation-delay: 540ms; }
+#illus-jobs .jl6 { animation-delay: 600ms; }
+#illus-jobs .jl7 { animation-delay: 660ms; }
+#illus-jobs .jl8 { animation-delay: 720ms; }
+#illus-jobs .jl9 { animation-delay: 780ms; }
+#illus-jobs .jl10 { animation-delay: 840ms; }
+/* jl-sep, jl-latest, jl-prompt: retained in comment for reference
+   These classes are no longer used in the SVG (plain text elements now).
+#illus-jobs .jl-sep { animation-delay: 900ms; }
+#illus-jobs .jl-latest { animation-delay: 960ms; }
+#illus-jobs .jl-prompt { animation-delay: 1200ms; }
+*/
+
+@keyframes j-type {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+/* cursor blink */
+#illus-jobs .j-cursor {
+  opacity: 0;
+  animation: j-cursor-appear 1ms 1500ms forwards,
+             cursor-blink-anim 1.06s steps(1) 1500ms infinite;
+}
+@keyframes j-cursor-appear { to { opacity: 1; } }
+
+/* ============================================================================
+   ILLUS-MANIFESTE — typewriter
+   ============================================================================ */
+
+#illus-manifeste {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Typewriter lines */
+#illus-manifeste .m-typewriter .m-line {
+  clip-path: inset(0 100% 0 0);
+  animation: m-type-line 600ms steps(30, end) forwards;
+}
+#illus-manifeste .ml1 { animation: m-type-line 600ms steps(30, end) 300ms forwards; }
+#illus-manifeste .ml2 { animation: m-type-line 500ms steps(25, end) 600ms forwards; }
+#illus-manifeste .ml3 { animation: m-type-line 700ms steps(40, end) 900ms forwards; }
+#illus-manifeste .ml4 { animation: m-type-line 500ms steps(25, end) 1300ms forwards; }
+#illus-manifeste .ml5 { animation: m-type-line 600ms steps(30, end) 1500ms forwards; }
+#illus-manifeste .ml7 { animation: m-type-line 500ms steps(25, end) 1900ms forwards; }
+#illus-manifeste .ml8 { animation: m-type-line 500ms steps(25, end) 2200ms forwards; }
+#illus-manifeste .ml9 { animation: m-type-line 600ms steps(30, end) 2500ms forwards; }
+#illus-manifeste .ml10 { animation: m-type-line 700ms steps(35, end) 3000ms forwards; }
+
+@keyframes m-type-line {
+  0% { clip-path: inset(0 100% 0 0); opacity: 1; }
+  100% { clip-path: inset(0 0 0 0); opacity: 1; }
+}
+
+/* Ready state fade */
+#illus-manifeste .m-ready {
+  opacity: 0;
+  animation: m-ready-fade 400ms ease-out 3700ms forwards;
+}
+@keyframes m-ready-fade {
+  to { opacity: 1; }
+}
+
+/* Cursor blink */
+#illus-manifeste .m-cursor {
+  opacity: 0;
+  animation: m-cursor-appear 1ms 3800ms forwards,
+             cursor-blink-anim 1.06s steps(1) 3800ms infinite;
+}
+@keyframes m-cursor-appear { to { opacity: 1; } }
+
+/* ============================================================================
+   ILLUS-BOARD — palette grid
+   ============================================================================ */
+
+#illus-board {
+  animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+#illus-board .bp {
+  transition: opacity 400ms var(--ease-signature);
+}
+
 /* ============================================================================
    ACCESSIBILITY — prefers-reduced-motion
-   Coupe TOUTES les animations, montre l'état final immédiatement.
    ============================================================================ */
 
 @media (prefers-reduced-motion: reduce) {
   .terminal-line,
   .cursor-blink,
-  .cursor-caret,
   .reveal-term,
   .card-reveal,
-  .h-underline::after,
-  .neg-cascade::before,
-  .line-draw,
-  .hero-logo-draw svg {
+  .h-underline::after {
     animation: none !important;
     transition: none !important;
   }
@@ -234,7 +374,35 @@
   .reveal-term { opacity: 1; transform: none; }
   .card-reveal { border-left-color: #B6FF00; }
   .h-underline::after { transform: scaleX(1); }
-  .cursor-blink, .cursor-caret { opacity: 1; animation: none !important; }
-  .neg-cascade::before { display: none; }
+  .cursor-blink { opacity: 1; animation: none !important; }
+
   .hero-logo-draw svg { stroke-dashoffset: 0; opacity: 1; }
+
+  #illus-crt,
+  #illus-bureau,
+  #illus-adherer,
+  #illus-contenu,
+  #illus-lab,
+  #illus-partenaires,
+  #illus-contact,
+  #illus-jobs,
+  #illus-manifeste,
+  #illus-board { animation: none; opacity: 1; transform: none; }
+
+  /* Links already drawn */
+  #illus-bureau .bl { animation: none; stroke-dashoffset: 0; }
+  #illus-bureau .blab { animation: none; opacity: 1; }
+
+  #illus-lab .l-trace { animation: none; stroke-dashoffset: 0; }
+
+  #illus-jobs .jl { animation: none; clip-path: none; }
+  #illus-jobs .j-cursor { animation: none; opacity: 1; }
+
+  #illus-manifeste .m-line { animation: none; clip-path: none; }
+  #illus-manifeste .m-ready { animation: none; opacity: 1; }
+  #illus-manifeste .m-cursor { animation: none; opacity: 1; }
+
+  #illus-adherer .a-stamp { animation: none; opacity: 1; transform: none; }
+
+  #illus-board .bp { transition: none; opacity: 0.85; }
 }

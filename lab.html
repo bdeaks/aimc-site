@@ -17,8 +17,68 @@
 <section class="page-hero">
  <div class="container">
  <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span>Le lab</div>
+ <div class="hero-grid">
+ <div class="hero-copy">
  <h1>Le lab.</h1>
  <p class="lead">Là où le club produit des preuves. Demo Day trimestriel, benchmark ouvert, cartographie compétences, hackathon PME/ETI. Le lab n'est pas un espace, c'est une pratique.</p>
+ </div>
+ <div class="hero-illus" id="hero-illus-slot" aria-hidden="true">
+  <svg id="illus-lab" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" fill="none">
+   <defs>
+    <clipPath id="osc-clip"><rect x="42" y="34" width="436" height="280" rx="5"/></clipPath>
+   </defs>
+
+   <!-- instrument panel -->
+   <rect x="20" y="20" width="480" height="360" rx="5" fill="#0C0C0A" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+
+   <!-- header -->
+   <text x="42" y="48" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--lime)" letter-spacing="0.14em">
+     <tspan fill="var(--orange)">◆</tspan><tspan dx="8">LAB · MESURE EN DIRECT</tspan>
+   </text>
+   <line x1="20" y1="58" x2="500" y2="58" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
+
+   <!-- screen area -->
+   <rect x="42" y="72" width="436" height="234" rx="5" fill="#0A0C06" stroke="rgba(255,255,255,0.08)" stroke-width="0.5"/>
+
+   <!-- scope grid -->
+   <g stroke="rgba(30,90,138,0.25)" stroke-width="0.5">
+    <line x1="42" y1="117" x2="478" y2="117"/>
+    <line x1="42" y1="164" x2="478" y2="164"/>
+    <line x1="42" y1="211" x2="478" y2="211"/>
+    <line x1="42" y1="258" x2="478" y2="258"/>
+    <line x1="131" y1="72" x2="131" y2="306"/>
+    <line x1="220" y1="72" x2="220" y2="306"/>
+    <line x1="309" y1="72" x2="309" y2="306"/>
+    <line x1="398" y1="72" x2="398" y2="306"/>
+   </g>
+   <!-- center crosshair -->
+   <g stroke="rgba(30,90,138,0.35)" stroke-width="0.5">
+    <line x1="42" y1="189" x2="478" y2="189"/>
+    <line x1="260" y1="72" x2="260" y2="306"/>
+   </g>
+
+   <!-- trace (clean SVG path, no filter) -->
+   <g clip-path="url(#osc-clip)">
+    <polyline class="l-trace"
+      points="42,260 60,252 80,242 100,230 120,218 140,206 160,180 180,150
+              200,112 220,78 240,56 260,44 280,52 300,66 320,88
+              340,114 360,144 380,170 400,194 420,212 440,232 460,250 478,258"
+      fill="none" stroke="var(--lime)" stroke-width="1" opacity="0.85"/>
+   </g>
+
+   <!-- labels -->
+   <text x="48" y="345" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)" letter-spacing="0.1em">
+     <tspan fill="var(--lime)">◉</tspan><tspan dx="4">CH1: AIMC.LAB.SIGNAL</tspan>
+   </text>
+   <text x="472" y="345" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)" text-anchor="end" letter-spacing="0.1em">1V/DIV 500MS</text>
+
+   <!-- legend -->
+   <text x="260" y="370" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)" text-anchor="middle" letter-spacing="0.1em">
+     <tspan fill="var(--orange)">◆</tspan><tspan dx="6">DEMO DAY · BENCHMARK · ATELIER</tspan>
+   </text>
+  </svg>
+ </div>
+ </div>
  </div>
 </section>
 

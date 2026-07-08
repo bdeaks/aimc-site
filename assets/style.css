@@ -503,3 +503,17 @@ body{padding-bottom:0;}
  .nav{gap:18px;font-size:10px;}
  .nav .btn-nav{padding:6px 12px;font-size:9px;}
 }
+
+/* hero 2-col : texte gauche / illustration droite */
+.hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center;}
+.hero-illus{min-height:280px;display:flex;align-items:center;justify-content:center;}
+.hero-illus svg{width:100%;height:auto;display:block;}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr;gap:32px;}.hero-illus{min-height:0;order:2;}}
+
+/* compactage hero index (2-col) : tout tient au-dessus de la fold */
+.hero:has(.hero-grid){padding:64px 0 56px;}
+.hero-grid .sub-motto{margin-bottom:20px;}
+.hero-grid .sub{margin-bottom:32px;max-width:560px;font-size:clamp(16px,1.6vw,20px);}
+.hero-grid h1{font-size:clamp(40px,4.6vw,64px);}
+.hero-illus svg{max-width:500px;margin:0 auto;}
+.hero-illus{padding-top:24px;}

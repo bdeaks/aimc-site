@@ -150,12 +150,6 @@
  }, {threshold:0.15, rootMargin:'0px 0px -40px 0px'});
  revealEls.forEach(el => revealObs.observe(el));
 
- // Hero logo draw-in — delay léger pour assurer le render
- setTimeout(() => {
-  const heroSvg = document.querySelector('.hero-logo-draw svg');
-  if(heroSvg) heroSvg.classList.add('hero-drawn');
- }, 300);
-
  // Motion system — reveal-term, card-reveal, h-underline, neg-cascade, terminal-line
  // Auto-apply neg-cascade sur les .neg-line existantes (bandeau négatif)
  document.querySelectorAll('.neg-line').forEach(el => el.classList.add('neg-cascade'));
