@@ -43,11 +43,22 @@
     <path class="bl bl5" d="M304 150 L348 210" stroke="var(--blue)" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
     <path class="bl bl6" d="M304 150 L260 210" stroke="var(--blue)" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
    </g>
+   <!-- data-flow pulse dots (invisible initially, pulse after draw-in) -->
+   <g class="b-pulses">
+    <circle cx="238" cy="122" r="3" class="pd pd1" fill="var(--lime)"/>
+    <circle cx="282" cy="122" r="3" class="pd pd2" fill="var(--lime)"/>
+    <circle cx="194" cy="180" r="3" class="pd pd3" fill="var(--lime)"/>
+    <circle cx="238" cy="180" r="3" class="pd pd4" fill="var(--lime)"/>
+    <circle cx="326" cy="180" r="3" class="pd pd5" fill="var(--lime)"/>
+    <circle cx="282" cy="180" r="3" class="pd pd6" fill="var(--lime)"/>
+   </g>
 
    <!-- president — orange hub (core card) -->
-   <g class="b-node bn1">
+   <g class="b-node bn1 hub-node">
     <rect x="230" y="75" width="60" height="40" rx="5" fill="rgba(232,89,12,0.08)" stroke="var(--orange)" stroke-width="1"/>
     <text x="260" y="100" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--orange)" text-anchor="middle" font-weight="600" letter-spacing="0.12em">PRÉSIDENTE</text>
+    <!-- hub pulse aura -->
+    <rect class="hub-aura" x="228" y="73" width="64" height="44" rx="7" fill="none" stroke="var(--orange)" stroke-width="0.5" opacity="0"/>
    </g>
 
    <!-- VP + treasurer -->

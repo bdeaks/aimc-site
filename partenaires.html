@@ -55,14 +55,18 @@
    <text x="370" y="218" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)">BENCHMARKS</text>
    <text x="370" y="236" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)">RAPPORT ANNUEL</text>
 
-   <!-- connecting line -->
-   <line x1="170" y1="190" x2="350" y2="190" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+   <!-- connecting line with flow animation -->
+   <line class="p-conn-bg" x1="170" y1="190" x2="350" y2="190" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+   <line class="p-conn-flow" x1="170" y1="190" x2="350" y2="190" stroke="var(--lime)" stroke-width="1" opacity="0"/>
    <polygon points="346,186 354,190 346,194" fill="var(--lime)"/>
 
-   <!-- center badge -->
-   <rect x="225" y="170" width="70" height="40" rx="5" fill="rgba(182,255,0,0.06)" stroke="var(--lime)" stroke-width="1"/>
-   <text x="260" y="190" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--lime)" text-anchor="middle" letter-spacing="0.1em" font-weight="600">CONNECTÉ</text>
-   <text x="260" y="202" font-family="'IBM Plex Mono',monospace" font-size="7" fill="var(--mute)" text-anchor="middle">4 PARTENAIRES</text>
+   <!-- center badge with ping halo -->
+   <g class="p-badge">
+    <circle class="p-ping" cx="260" cy="190" r="20" fill="none" stroke="var(--lime)" stroke-width="0.5" opacity="0"/>
+    <rect x="225" y="170" width="70" height="40" rx="5" fill="rgba(182,255,0,0.06)" stroke="var(--lime)" stroke-width="1"/>
+    <text x="260" y="190" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--lime)" text-anchor="middle" letter-spacing="0.1em" font-weight="600">CONNECTÉ</text>
+    <text x="260" y="202" font-family="'IBM Plex Mono',monospace" font-size="7" fill="var(--mute)" text-anchor="middle">4 PARTENAIRES</text>
+   </g>
 
    <!-- bottom status -->
    <text x="42" y="358" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--mute)" letter-spacing="0.12em">

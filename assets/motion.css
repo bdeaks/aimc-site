@@ -196,6 +196,79 @@
 }
 
 /* ============================================================================
+   ILLUS-BUREAU — enhanced node stagger + data pulses + hub breath
+   ============================================================================ */
+
+/* Nodes: scale + opacity stagger after links draw in */
+#illus-bureau .b-node {
+  opacity: 0;
+  transform: scale(0.94);
+  animation: b-node-pop 400ms var(--ease-signature) forwards;
+}
+#illus-bureau .bn1 { animation-delay: 900ms; }
+#illus-bureau .bn2 { animation-delay: 950ms; }
+#illus-bureau .bn3 { animation-delay: 1000ms; }
+#illus-bureau .bn4 { animation-delay: 1050ms; }
+#illus-bureau .bn5 { animation-delay: 1100ms; }
+#illus-bureau .bn6 { animation-delay: 1150ms; }
+
+@keyframes b-node-pop {
+  0% { opacity: 0; transform: scale(0.94); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Hub node: gentle breathing after reveal (3.5s loop, quasi-imperceptible) */
+#illus-bureau .hub-node {
+  transform-origin: 260px 95px;
+  animation: b-node-pop 400ms var(--ease-signature) 900ms forwards,
+             b-hub-breathe 3.5s ease-in-out 1400ms infinite;
+}
+
+@keyframes b-hub-breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+
+/* Hub aura pulse around president node */
+#illus-bureau .hub-aura {
+  animation: b-hub-aura-pulse 3.5s ease-in-out 1400ms infinite;
+}
+@keyframes b-hub-aura-pulse {
+  0%, 100% { opacity: 0; }
+  25% { opacity: 0.4; r: 7; stroke-width: 0.5; }
+  50% { opacity: 0; }
+}
+
+/* Data-flow pulses along each connection */
+#illus-bureau .pd {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: b-data-pulse 2.5s ease-in-out infinite;
+}
+#illus-bureau .pd1 { animation-delay: 1200ms; }
+#illus-bureau .pd2 { animation-delay: 1400ms; }
+#illus-bureau .pd3 { animation-delay: 1600ms; }
+#illus-bureau .pd4 { animation-delay: 1800ms; }
+#illus-bureau .pd5 { animation-delay: 2000ms; }
+#illus-bureau .pd6 { animation-delay: 2200ms; }
+
+@keyframes b-data-pulse {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  30% {
+    opacity: 0.85;
+    transform: scale(1.2);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+/* ============================================================================
    ILLUS-ADHERER — membership two-panel flow
    ============================================================================ */
 
@@ -232,7 +305,7 @@
   animation: tapestry-in 500ms var(--ease-signature) 200ms both;
 }
 
-/* Trace draws */
+/* Trace draws once */
 #illus-lab .l-trace {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
@@ -240,6 +313,21 @@
 }
 @keyframes tap-trace {
   to { stroke-dashoffset: 0; }
+}
+
+/* Scan line: sweeps left-to-right continuously after draw-in */
+#illus-lab .l-scan-line {
+  transform-box: fill-box;
+  transform-origin: 42px 189px;
+  animation: l-scan-sweep 2s ease-in-out 2000ms infinite;
+}
+@keyframes l-scan-sweep {
+  0%   { transform: translateX(0); opacity: 0; }
+  5%   { opacity: 0.5; }
+  45%  { opacity: 0.6; }
+  50%  { opacity: 0; }
+  95%  { opacity: 0; }
+  100% { transform: translateX(436px); opacity: 0; }
 }
 
 /* ============================================================================
@@ -250,12 +338,63 @@
   animation: tapestry-in 500ms var(--ease-signature) 200ms both;
 }
 
+/* Connection line: dashed flow animation from both sides toward center */
+#illus-partenaires .p-conn-bg {
+  /* Static background line, already visible */
+}
+#illus-partenaires .p-conn-flow {
+  stroke-dasharray: 10 20;
+  animation: p-flow-traffic 2.5s linear 800ms infinite;
+}
+@keyframes p-flow-traffic {
+  0%   { stroke-dashoffset: 180; opacity: 0.8; }
+  50%  { opacity: 1; }
+  100% { stroke-dashoffset: -180; opacity: 0.8; }
+}
+
+/* Center badge: ping halo in slow loop */
+#illus-partenaires .p-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: p-ping-halo 2.8s ease-out 1000ms infinite;
+}
+@keyframes p-ping-halo {
+  0%   { transform: scale(0.5); opacity: 0.6; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
 /* ============================================================================
    ILLUS-CONTACT — sender/receiver flow
    ============================================================================ */
 
 #illus-contact {
   animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Message particle: travels from VOUS (200) toward AIMC (280) along the line */
+#illus-contact .c-particle {
+  animation: c-particle-travel 3s ease-in-out 800ms infinite;
+}
+@keyframes c-particle-travel {
+  0%   { transform: translateX(0); opacity: 0; }
+  10%  { transform: translateX(0); opacity: 1; }
+  45%  { transform: translateX(80px); opacity: 1; }
+  55%  { transform: translateX(80px); opacity: 0; }
+  100% { transform: translateX(80px); opacity: 0; }
+}
+
+/* Receiver ring pulse when particle arrives */
+#illus-contact .c-receiver-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: c-receiver-pulse 3s ease-out 800ms infinite;
+}
+@keyframes c-receiver-pulse {
+  0%   { transform: scale(0.8); opacity: 0; }
+  48%  { transform: scale(0.8); opacity: 0; }
+  52%  { transform: scale(0.9); opacity: 0.7; }
+  70%  { transform: scale(1.05); opacity: 0; }
+  100% { transform: scale(1.05); opacity: 0; }
 }
 
 /* ============================================================================
@@ -390,10 +529,24 @@
   #illus-board { animation: none; opacity: 1; transform: none; }
 
   /* Links already drawn */
+  /* Bureau — new animations */
   #illus-bureau .bl { animation: none; stroke-dashoffset: 0; }
   #illus-bureau .blab { animation: none; opacity: 1; }
+  #illus-bureau .b-node { animation: none; opacity: 1; transform: none; }
+  #illus-bureau .hub-node { animation: none; transform: none !important; }
+  #illus-bureau .hub-aura { animation: none; opacity: 0; }
+  #illus-bureau .pd { animation: none; opacity: 0; }
 
   #illus-lab .l-trace { animation: none; stroke-dashoffset: 0; }
+  #illus-lab .l-scan-line { animation: none; opacity: 0; }
+
+  /* Partenaires — new animations */
+  #illus-partenaires .p-conn-flow { animation: none; opacity: 0; }
+  #illus-partenaires .p-ping { animation: none; opacity: 0; }
+
+  /* Contact — new animations */
+  #illus-contact .c-particle { animation: none; opacity: 0; }
+  #illus-contact .c-receiver-ring { animation: none; opacity: 0; }
 
   #illus-jobs .jl { animation: none; clip-path: none; }
   #illus-jobs .j-cursor { animation: none; opacity: 1; }
