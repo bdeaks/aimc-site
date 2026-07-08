@@ -315,6 +315,13 @@
   to { stroke-dashoffset: 0; }
 }
 
+/* Trace glow (wider, behind main trace) */
+#illus-lab .l-trace-glow {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: tap-trace 1500ms var(--ease-signature) 400ms forwards;
+}
+
 /* Scan line: sweeps left-to-right continuously after draw-in */
 #illus-lab .l-scan-line {
   transform-box: fill-box;
@@ -369,6 +376,31 @@
 
 #illus-contact {
   animation: tapestry-in 500ms var(--ease-signature) 200ms both;
+}
+
+/* Glowing route when particle travels */
+#illus-contact .c-route-glow {
+  animation: c-route-glow 3s ease-in-out 800ms infinite;
+}
+@keyframes c-route-glow {
+  0%   { opacity: 0; }
+  10%  { opacity: 0.15; }
+  45%  { opacity: 0.2; }
+  55%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Message particle trail (glow behind) */
+#illus-contact .c-particle-trail {
+  animation: c-particle-trail-anim 3s ease-in-out 800ms infinite;
+}
+@keyframes c-particle-trail-anim {
+  0%   { transform: translateX(0); opacity: 0; }
+  8%   { opacity: 0.3; }
+  10%  { transform: translateX(0); opacity: 0; }
+  45%  { transform: translateX(80px); opacity: 0.2; }
+  55%  { transform: translateX(80px); opacity: 0; }
+  100% { transform: translateX(80px); opacity: 0; }
 }
 
 /* Message particle: travels from VOUS (200) toward AIMC (280) along the line */
@@ -538,6 +570,7 @@
   #illus-bureau .pd { animation: none; opacity: 0; }
 
   #illus-lab .l-trace { animation: none; stroke-dashoffset: 0; }
+  #illus-lab .l-trace-glow { animation: none; stroke-dashoffset: 0; }
   #illus-lab .l-scan-line { animation: none; opacity: 0; }
 
   /* Partenaires — new animations */
@@ -546,6 +579,8 @@
 
   /* Contact — new animations */
   #illus-contact .c-particle { animation: none; opacity: 0; }
+  #illus-contact .c-particle-trail { animation: none; opacity: 0; }
+  #illus-contact .c-route-glow { animation: none; opacity: 0; }
   #illus-contact .c-receiver-ring { animation: none; opacity: 0; }
 
   #illus-jobs .jl { animation: none; clip-path: none; }
