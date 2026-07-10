@@ -9,21 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/motion.css">
-<link rel="stylesheet" href="assets/mesh-gradient.css">
+
 </head>
 <body>
 
 <header class="site-header" data-header></header>
 
-<section class="page-hero mesh-hero">
- <div class="mesh-hero-bg" aria-hidden="true">
-  <div class="hblob hblob-1"></div>
-  <div class="hblob hblob-2"></div>
-  <div class="hblob hblob-3"></div>
-  <div class="hblob hblob-4"></div>
-  <div class="hblob hblob-5"></div>
-  <div class="hblob hblob-6"></div>
- </div>
+<section class="page-hero">
  <div class="container">
  <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span>Le bureau</div>
  <div class="hero-grid">
@@ -37,12 +29,6 @@
     <defs>
      <filter id="glass-blur-bureau">
       <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
-     </filter>
-     <filter id="glow-dot">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
-     </filter>
-     <filter id="glow-aura">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
      </filter>
     </defs>
    <!-- panel background — very translucent glass base -->
@@ -73,29 +59,21 @@
     <path class="bl bl6" d="M304 150 L260 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.25"/>
    </g>
    
-   <!-- President orange glow aura (wider, behind node) -->
-   <ellipse cx="260" cy="95" rx="70" ry="45" fill="rgba(232,89,12,0.08)" filter="url(#glow-aura)" opacity="0.6">
-    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.5s" repeatCount="indefinite"/>
-   </ellipse>
-
    <!-- data-flow pulse dots (invisible initially, pulse after draw-in) -->
    <g class="b-pulses">
-    <circle cx="238" cy="122" r="5" class="pd pd1" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="282" cy="122" r="5" class="pd pd2" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="194" cy="180" r="4" class="pd pd3" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="238" cy="180" r="4" class="pd pd4" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="326" cy="180" r="4" class="pd pd5" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="282" cy="180" r="4" class="pd pd6" fill="var(--lime)" filter="url(#glow-dot)"/>
+    <circle cx="238" cy="122" r="5" class="pd pd1" fill="var(--lime)"/>
+    <circle cx="282" cy="122" r="5" class="pd pd2" fill="var(--lime)"/>
+    <circle cx="194" cy="180" r="4" class="pd pd3" fill="var(--lime)"/>
+    <circle cx="238" cy="180" r="4" class="pd pd4" fill="var(--lime)"/>
+    <circle cx="326" cy="180" r="4" class="pd pd5" fill="var(--lime)"/>
+    <circle cx="282" cy="180" r="4" class="pd pd6" fill="var(--lime)"/>
    </g>
 
    <!-- president — orange hub glass card (larger, with glow border) -->
    <g class="b-node bn1 hub-node">
     <rect x="220" y="68" width="80" height="54" rx="5" fill="rgba(232,89,12,0.12)" stroke="var(--orange)" stroke-width="1.5"/>
-    <rect x="220" y="68" width="80" height="54" rx="5" fill="none" stroke="var(--orange)" stroke-width="3" opacity="0.2" filter="url(#glow-aura)"/>
     <text x="260" y="90" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--orange)" text-anchor="middle" font-weight="600" letter-spacing="0.12em">PRÉSIDENTE</text>
     <text x="260" y="108" font-family="'IBM Plex Mono',monospace" font-size="8" fill="rgba(232,89,12,0.7)" text-anchor="middle" letter-spacing="0.08em">Amélie K.</text>
-    <!-- hub glow aura -->
-    <rect class="hub-aura" x="218" y="66" width="84" height="58" rx="7" fill="none" stroke="var(--orange)" stroke-width="1" opacity="0"/>
    </g>
 
    <!-- VP -- blue glass, slightly larger -->
@@ -165,7 +143,6 @@
  <div class="grid-bureau">
  <div class="member tresorier">
  <div class="photo">PB</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Philippe Baudoux</h3>
  <div class="role">Trésorier</div>
@@ -178,7 +155,6 @@
  </div>
  <div class="member vp">
  <div class="photo">ML</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Marc Lefebvre</h3>
  <div class="role">Vice-président</div>
@@ -191,7 +167,6 @@
  </div>
  <div class="member president">
  <div class="photo">AK</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Amélie Kouassi</h3>
  <div class="role">Présidente</div>
@@ -204,7 +179,6 @@
  </div>
  <div class="member secretaire">
  <div class="photo">LT</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Ludovic Tanguy</h3>
  <div class="role">Secrétaire</div>
@@ -217,7 +191,6 @@
  </div>
  <div class="member coord-transmission">
  <div class="photo">JM</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Julie Morel</h3>
  <div class="role">Coord. transmission</div>
@@ -230,7 +203,6 @@
  </div>
  <div class="member coord-partenariats">
  <div class="photo">NG</div>
- <div class="photo-glow"></div>
  <div class="info">
  <h3>Nicolas Gérard</h3>
  <div class="role">Coord. partenariats</div>

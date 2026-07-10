@@ -9,21 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=IBM+Plex+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <link rel="stylesheet" href="assets/motion.css">
-<link rel="stylesheet" href="assets/mesh-gradient.css">
 </head>
 <body>
 
 <header class="site-header" data-header></header>
 
-<section class="page-hero mesh-hero">
- <div class="mesh-hero-bg" aria-hidden="true">
-  <div class="hblob hblob-1"></div>
-  <div class="hblob hblob-2"></div>
-  <div class="hblob hblob-3"></div>
-  <div class="hblob hblob-4"></div>
-  <div class="hblob hblob-5"></div>
-  <div class="hblob hblob-6"></div>
- </div>
+<section class="page-hero">
  <div class="container">
  <div class="breadcrumb"><a href="index.html">Accueil</a><span class="sep">/</span>Contact</div>
  <div class="hero-grid">
@@ -35,9 +26,6 @@
   <div class="illus-frame">
    <svg id="illus-contact" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 380" fill="none" style="position:relative;z-index:1;">
    <defs>
-    <filter id="glow-trail">
-     <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
-    </filter>
    </defs>
 
    <!-- panel bg — glass translucent -->
@@ -63,9 +51,9 @@
    <polygon points="276,176 284,180 276,184" fill="var(--lime)"/>
    <!-- traveling message particle with glow trail -->
    <circle class="c-particle" cx="200" cy="180" r="4" fill="var(--lime)" opacity="0"/>
-   <circle class="c-particle-trail" cx="200" cy="180" r="6" fill="var(--lime)" filter="url(#glow-trail)" opacity="0"/>
+   <circle class="c-particle-trail" cx="200" cy="180" r="6" fill="var(--lime)" opacity="0"/>
    <!-- static glow on the line path (glowing route) -->
-   <line class="c-route-glow" x1="200" y1="180" x2="280" y2="180" stroke="var(--lime)" stroke-width="2" opacity="0" filter="url(#glow-trail)"/>
+   <line class="c-route-glow" x1="200" y1="180" x2="280" y2="180" stroke="var(--lime)" stroke-width="2" opacity="0"/>
 
    <!-- right card: AIMC (receiver) glass style with pulse feedback -->
    <g class="c-receiver">

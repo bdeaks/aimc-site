@@ -292,7 +292,7 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
 .member .photo{aspect-ratio:1/1;position:relative;overflow:hidden;
  display:flex;align-items:center;justify-content:center;font-family:"Space Grotesk",sans-serif;
  font-weight:700;font-size:56px;letter-spacing:-.02em;color:var(--paper);
- background:linear-gradient(155deg,var(--m-accent,var(--ink)) 0%,color-mix(in srgb,var(--m-accent,var(--ink)) 78%,#000 22%) 100%);}
+ background:var(--m-accent,var(--ink));}
 .member .photo::before{content:"";position:absolute;inset:0;
  background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1px);background-size:16px 16px;opacity:.5;}
 .member .photo::after{content:"";position:absolute;inset:0;background:#fff;opacity:0;transition:opacity .3s;}
@@ -543,7 +543,7 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
   font-size: 72px;
   letter-spacing: -0.02em;
   color: var(--paper);
-  background: linear-gradient(155deg, var(--m-accent, var(--ink)) 0%, color-mix(in srgb, var(--m-accent, var(--ink)) 70%, #000 30%) 100%);
+  background: var(--m-accent, var(--ink));
   position: relative;
 }
 
@@ -563,7 +563,7 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
   left: 0;
   right: 0;
   height: 40%;
-  background: linear-gradient(transparent, rgba(0,0,0,0.25));
+  background: transparent;
   opacity: 0;
   transition: opacity 0.3s;
 }
@@ -580,7 +580,7 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s var(--ease-press);
-  background: linear-gradient(135deg, var(--m-accent, var(--blue)) 0%, transparent 50%, var(--m-accent, var(--blue)) 100%);
+  background: var(--m-accent, var(--blue));
   z-index: 1;
   mix-blend-mode: overlay;
 }
