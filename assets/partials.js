@@ -98,7 +98,7 @@
  </div>
  <div class="legal">
  <div><span class="lime">$</span> aimc.dev - 2026 · association loi 1901 · en cours de constitution</div>
- <div>Made with ❤️ par ceux qui font.</div>
+ <div>Made with care par ceux qui font.</div>
  </div>
  </div>
  `;

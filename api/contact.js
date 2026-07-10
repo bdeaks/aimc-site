@@ -53,7 +53,7 @@ export default async function handler(req, res) {
 <div style="margin-bottom:24px;"><span style="background:#B6FF00;color:#0C0C0A;font-weight:800;font-size:11px;letter-spacing:.1em;padding:4px 10px;border-radius:99px;">NOUVEAU CONTACT AIMC</span></div>
 <h2 style="margin:0 0 8px;font-size:22px;font-weight:800;color:#FAF7F2;">${prenom || ''}</h2>
 <p style="margin:0 0 4px;color:#8A8580;font-size:14px;">${email}</p>
-${tel ? `<p style="margin:0 0 4px;color:#8A8580;font-size:14px;">📞 ${tel}</p>` : ''}
+${tel ? `<p style="margin:0 0 4px;color:#8A8580;font-size:14px;">${tel}</p>` : ''}
 ${sujet ? `<p style="margin:0 0 12px;font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:#B6FF00;font-weight:700;">${sujet}</p>` : ''}
 <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:16px;font-size:15px;line-height:1.6;white-space:pre-wrap;">${message}</div>
 <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:12px;color:#8A8580;">Répondre directement à cet email pour contacter ${prenom || 'le visiteur'}.</div>
