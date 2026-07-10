@@ -76,7 +76,7 @@ img{display:block;max-width:100%;height:auto;}
  background-size:24px 24px;opacity:.5;pointer-events:none;}
 .hero::after{content:"";position:absolute;top:30%;left:50%;width:500px;height:500px;
  transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;
- background:radial-gradient(circle,rgba(182,255,0,.08) 0%,rgba(182,255,0,.03) 40%,transparent 70%);
+ background:rgba(182,255,0,.04);
  animation:orb-pulse 6s ease-in-out infinite alternate;}
 @keyframes orb-pulse{0%{opacity:.6;transform:translate(-50%,-50%) scale(.9);}100%{opacity:1;transform:translate(-50%,-50%) scale(1.1);}}
 .hero .container{position:relative;}
@@ -220,9 +220,8 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
  ============================================================================ */
 .cta-final{background:var(--ink);color:var(--paper);padding:120px 0;text-align:center;position:relative;overflow:hidden;}
 .cta-final::before{content:"";position:absolute;inset:0;
- background:radial-gradient(circle at 50% 50%,transparent 0,var(--ink) 70%),
- linear-gradient(0deg,transparent 0,transparent 23px,var(--rule-dark) 24px);
- background-size:100% 100%,100% 24px;opacity:.5;}
+ background-image:linear-gradient(0deg,transparent 0,transparent 23px,var(--rule-dark) 24px);
+ background-size:100% 24px;opacity:.5;}
 .cta-final .container{position:relative;}
 .cta-final .kicker{color:var(--lime);font-family:"IBM Plex Mono",monospace;font-size:11px;
  letter-spacing:.15em;text-transform:uppercase;margin-bottom:24px;}
