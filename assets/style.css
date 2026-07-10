@@ -403,6 +403,489 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
 .rule{height:1px;background:var(--rule);margin:0;padding:0;border:0;}
 
 /* ============================================================================
+ AIMC v3.5 IMPROVEMENTS — Bureau hero counter + enhanced member cards
+ ============================================================================ */
+
+/* Bureau hero — enhanced illustration with counter badge */
+.hero-illus-bureau { position: relative; }
+.hero-illus-bureau .illus-frame { position: relative; }
+
+/* Bureau counter overlay — floating badge below the SVG */
+.bureau-counter {
+  position: absolute;
+  bottom: -8px;
+  right: 16px;
+  z-index: 5;
+  background: rgba(12,12,10,0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 5px;
+  padding: 10px 18px 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.bureau-counter .counter-num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--lime);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.bureau-counter .counter-label {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(250,247,242,0.6);
+  line-height: 1.4;
+  border-left: 1px solid rgba(255,255,255,0.10);
+  padding-left: 14px;
+}
+.bureau-counter .counter-label .num-highlight { color: var(--lime); font-weight: 600; }
+
+/* Animated counter number */
+.counter-digit {
+  display: inline-block;
+  animation: counter-roll 0.6s var(--ease-press);
+}
+@keyframes counter-roll {
+  0% { transform: translateY(8px); opacity: 0; }
+  60% { transform: translateY(-2px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ============================================================================
+ Member cards — upgraded design (bureau.html)
+ ============================================================================ */
+
+.grid-bureau {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.member {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 15px;
+  box-shadow: var(--elev-1);
+  overflow: hidden;
+  transition: transform 0.3s var(--ease-press), border-color 0.3s var(--ease-press), box-shadow 0.3s var(--ease-press);
+  position: relative;
+}
+
+.member::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  padding: 1.5px;
+  background: transparent;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease-press);
+  opacity: 0;
+}
+
+.member:hover {
+  transform: translateY(-6px);
+  border-color: transparent;
+  box-shadow: var(--elev-2), 0 0 0 1.5px var(--m-accent-border, var(--blue));
+}
+
+.member:hover::after {
+  opacity: 1;
+}
+
+/* Variants—member accent colors (overrides nth-child with explicit markers) */
+.member.president {
+  --m-accent: var(--orange);
+  --m-accent-border: var(--orange);
+}
+.member.vp {
+  --m-accent: var(--blue);
+  --m-accent-border: var(--blue);
+}
+.member.tresorier {
+  --m-accent: var(--blue);
+  --m-accent-border: var(--blue);
+}
+.member.secretaire {
+  --m-accent: #5A7247;
+  --m-accent-border: #5A7247;
+}
+.member.coord-transmission {
+  --m-accent: var(--red);
+  --m-accent-border: var(--red);
+}
+.member.coord-partenariats {
+  --m-accent: #7C5A9E;
+  --m-accent-border: #7C5A9E;
+}
+
+/* Larger avatar with gradient border */
+.member .photo {
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 72px;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  background: linear-gradient(155deg, var(--m-accent, var(--ink)) 0%, color-mix(in srgb, var(--m-accent, var(--ink)) 70%, #000 30%) 100%);
+  position: relative;
+}
+
+.member .photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.4;
+}
+
+.member .photo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(transparent, rgba(0,0,0,0.25));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.member:hover .photo::after {
+  opacity: 1;
+}
+
+/* Photo glow border — visible only on hover */
+.member .photo-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-press);
+  background: linear-gradient(135deg, var(--m-accent, var(--blue)) 0%, transparent 50%, var(--m-accent, var(--blue)) 100%);
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
+.member:hover .photo-glow {
+  opacity: 0.25;
+}
+
+.member .info {
+  padding: 24px;
+  position: relative;
+}
+
+.member .info h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.member .info .role {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--m-accent, var(--orange)) 12%, transparent);
+  color: var(--m-accent, var(--orange));
+  font-weight: 600;
+}
+
+.member .info .role::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--m-accent, var(--orange));
+  flex-shrink: 0;
+}
+
+.member .info .build {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-family: "Inter", sans-serif;
+}
+
+.member .info .build::before {
+  content: '> je build : ';
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+  display: block;
+  margin-bottom: 6px;
+}
+
+/* Legacy .build .build-tag support (for the inline tag) */
+.member .info .build .build-tag {
+  display: inline-block;
+  background: var(--beige);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  color: var(--mute);
+  letter-spacing: 0.04em;
+  margin-right: 4px;
+  margin-top: 8px;
+}
+
+/* ============================================================================
+ Partenaires page — visual category cards
+ ============================================================================ */
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.partner-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 15px;
+  box-shadow: var(--elev-1);
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s var(--ease-press), border-color 0.3s var(--ease-press), box-shadow 0.3s var(--ease-press);
+}
+
+.partner-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--ink);
+  box-shadow: var(--elev-2);
+}
+
+.partner-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: width 0.3s var(--ease-press);
+}
+
+.partner-card:hover::before {
+  width: 6px;
+}
+
+.partner-card.part-materiel::before { background: var(--orange); }
+.partner-card.part-credits::before { background: var(--blue); }
+.partner-card.part-lieux::before { background: #5A7247; }
+.partner-card.part-expertise::before { background: var(--red); }
+
+.partner-card .part-icon {
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.partner-card h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
+
+.partner-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.partner-card .part-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.partner-card .part-stats .part-tag {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+  background: var(--beige);
+  padding: 5px 12px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+/* Partner logos section */
+.partner-logos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.partner-logo-card {
+  aspect-ratio: 3/2;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  transition: border-color 0.3s var(--ease-press), box-shadow 0.3s var(--ease-press), transform 0.3s var(--ease-press);
+}
+
+.partner-logo-card:hover {
+  border-color: var(--ink);
+  box-shadow: var(--elev-2);
+  transform: translateY(-3px);
+}
+
+.partner-logo-card img {
+  max-width: 80%;
+  max-height: 60%;
+  object-fit: contain;
+  filter: saturate(0.7);
+  opacity: 0.85;
+  transition: filter 0.3s, opacity 0.3s;
+}
+
+.partner-logo-card:hover img {
+  filter: saturate(1);
+  opacity: 1;
+}
+
+/* Vacant placeholder slot */
+.partner-logo-card.slot-vacant {
+  border-style: dashed;
+  border-color: var(--rule);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--mute);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.3s var(--ease-press), color 0.3s var(--ease-press);
+}
+
+.partner-logo-card.slot-vacant:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  box-shadow: none;
+  transform: none;
+}
+
+.partner-logo-card.slot-vacant .slot-icon {
+  font-size: 28px;
+  line-height: 1;
+  opacity: 0.5;
+}
+
+.partner-logo-card.slot-vacant:hover .slot-icon {
+  opacity: 1;
+}
+
+/* "Ce qu'on ne fait pas" — contrast callout */
+.callout-no {
+  margin-top: 56px;
+  padding: 0;
+  border-radius: 15px;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+}
+
+.callout-no::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.callout-no .callout-inner {
+  padding: 40px 48px;
+  position: relative;
+  border-left: 4px solid var(--red);
+}
+
+.callout-no .callout-inner .kicker-dange {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.callout-no .callout-inner .kicker-dange::before {
+  content: '\26A0';
+  font-size: 14px;
+}
+
+.callout-no .callout-inner p {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(250,247,242,0.7);
+  max-width: 760px;
+}
+
+.callout-no .callout-inner p strong {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+/* ============================================================================
  RESPONSIVE
  ============================================================================ */
 @media (max-width:900px){
@@ -454,8 +937,16 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
  
  /* Bureau */
  .grid-bureau{grid-template-columns:repeat(2,1fr);gap:16px;}
- .member .photo{font-size:40px;}
- .member .info h3{font-size:17px;}
+ .member .photo{font-size:48px;}
+ .member .info h3{font-size:18px;}
+ .member .info{padding:18px;}
+ .member .info .role{font-size:9px;padding:3px 10px;}
+ .member .info .build{font-size:12px;}
+ 
+ /* Bureau counter */
+ .bureau-counter{bottom:-6px;right:12px;padding:8px 14px 8px 16px;gap:10px;}
+ .bureau-counter .counter-num{font-size:24px;}
+ .bureau-counter .counter-label{font-size:8px;padding-left:10px;}
  
  /* Pricing */
  .pricing{grid-template-columns:1fr;}
@@ -467,6 +958,20 @@ section.dark .sec-head p{color:var(--paper);opacity:.75;}
  .lab-cards{grid-template-columns:1fr;}
  .lab-card{padding:28px;}
  .lab-card h3{font-size:24px;}
+ 
+ /* Partenaires grid */
+ .partners-grid{grid-template-columns:1fr;gap:20px;}
+ .partner-card{padding:24px;}
+ .partner-card .part-icon{font-size:32px;}
+ .partner-card h3{font-size:22px;}
+ 
+ /* Partner logos */
+ .partner-logos{grid-template-columns:repeat(2,1fr);gap:16px;}
+ .partner-logo-card{padding:20px;}
+ 
+ /* Callout no */
+ .callout-no .callout-inner{padding:28px 24px;}
+ .callout-no .callout-inner p{font-size:12px;}
  
  /* Contact */
  .grid-2{grid-template-columns:1fr;gap:32px;}

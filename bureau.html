@@ -31,7 +31,7 @@
  <h1>Le bureau.</h1>
  <p class="lead">Six membres fondateurs. Six profils qui construisent réellement - pas des ambassadeurs, pas des porte-paroles. Des builders qui portent l'asso au quotidien.</p>
  </div>
- <div class="hero-illus" id="hero-illus-slot" aria-hidden="true">
+ <div class="hero-illus hero-illus-bureau" id="hero-illus-slot" aria-hidden="true">
   <div class="illus-frame">
    <svg id="illus-bureau" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 400" fill="none" style="position:relative;z-index:1;">
     <defs>
@@ -41,8 +41,11 @@
      <filter id="glow-dot">
       <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
      </filter>
+     <filter id="glow-aura">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6"/>
+     </filter>
     </defs>
-   <!-- panel background — very translucent glass base, dark + transparent -->
+   <!-- panel background — very translucent glass base -->
    <rect x="20" y="20" width="480" height="360" rx="5" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.16)" stroke-width="1"/>
 
    <!-- inner glass panel overlay for depth -->
@@ -54,126 +57,188 @@
    </text>
    <line x1="20" y1="58" x2="500" y2="58" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/>
 
-   <!-- connections (glowing, more visible) -->
+   <!-- connections (glowing, more visible, colored by node) -->
    <g class="b-links">
-    <path class="bl bl1" d="M260 95 L216 150" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
-    <path class="bl bl2" d="M260 95 L304 150" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
-    <path class="bl bl3" d="M216 150 L172 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
-    <path class="bl bl4" d="M216 150 L260 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
-    <path class="bl bl5" d="M304 150 L348 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
-    <path class="bl bl6" d="M304 150 L260 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.35"/>
+    <!-- President → VP (orange-blue) -->
+    <path class="bl bl1" d="M260 95 L216 150" stroke="var(--orange)" stroke-width="2" stroke-dasharray="4 4" opacity="0.4"/>
+    <!-- President → Treasurer (orange-blue) -->
+    <path class="bl bl2" d="M260 95 L304 150" stroke="var(--orange)" stroke-width="2" stroke-dasharray="4 4" opacity="0.4"/>
+    <!-- VP → Secretary (blue-green) -->
+    <path class="bl bl3" d="M216 150 L172 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.35"/>
+    <!-- VP → Coord. Transm. (blue-red) -->
+    <path class="bl bl4" d="M216 150 L260 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.35"/>
+    <!-- Treasurer → Coord. Parten. (blue-purple) -->
+    <path class="bl bl5" d="M304 150 L348 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.35"/>
+    <!-- Cross connection (blue-blue) -->
+    <path class="bl bl6" d="M304 150 L260 210" stroke="var(--blue)" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.25"/>
    </g>
+   
+   <!-- President orange glow aura (wider, behind node) -->
+   <ellipse cx="260" cy="95" rx="70" ry="45" fill="rgba(232,89,12,0.08)" filter="url(#glow-aura)" opacity="0.6">
+    <animate attributeName="opacity" values="0.4;0.7;0.4" dur="3.5s" repeatCount="indefinite"/>
+   </ellipse>
+
    <!-- data-flow pulse dots (invisible initially, pulse after draw-in) -->
    <g class="b-pulses">
-    <circle cx="238" cy="122" r="4" class="pd pd1" fill="var(--lime)" filter="url(#glow-dot)"/>
-    <circle cx="282" cy="122" r="4" class="pd pd2" fill="var(--lime)" filter="url(#glow-dot)"/>
+    <circle cx="238" cy="122" r="5" class="pd pd1" fill="var(--lime)" filter="url(#glow-dot)"/>
+    <circle cx="282" cy="122" r="5" class="pd pd2" fill="var(--lime)" filter="url(#glow-dot)"/>
     <circle cx="194" cy="180" r="4" class="pd pd3" fill="var(--lime)" filter="url(#glow-dot)"/>
     <circle cx="238" cy="180" r="4" class="pd pd4" fill="var(--lime)" filter="url(#glow-dot)"/>
     <circle cx="326" cy="180" r="4" class="pd pd5" fill="var(--lime)" filter="url(#glow-dot)"/>
     <circle cx="282" cy="180" r="4" class="pd pd6" fill="var(--lime)" filter="url(#glow-dot)"/>
    </g>
 
-   <!-- president — orange hub glass card -->
+   <!-- president — orange hub glass card (larger, with glow border) -->
    <g class="b-node bn1 hub-node">
-    <rect x="228" y="73" width="64" height="44" rx="5" fill="rgba(232,89,12,0.10)" stroke="var(--orange)" stroke-width="1.5"/>
-    <text x="260" y="100" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--orange)" text-anchor="middle" font-weight="600" letter-spacing="0.12em">PRÉSIDENTE</text>
+    <rect x="220" y="68" width="80" height="54" rx="5" fill="rgba(232,89,12,0.12)" stroke="var(--orange)" stroke-width="1.5"/>
+    <rect x="220" y="68" width="80" height="54" rx="5" fill="none" stroke="var(--orange)" stroke-width="3" opacity="0.2" filter="url(#glow-aura)"/>
+    <text x="260" y="90" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--orange)" text-anchor="middle" font-weight="600" letter-spacing="0.12em">PRÉSIDENTE</text>
+    <text x="260" y="108" font-family="'IBM Plex Mono',monospace" font-size="8" fill="rgba(232,89,12,0.7)" text-anchor="middle" letter-spacing="0.08em">Amélie K.</text>
     <!-- hub glow aura -->
-    <rect class="hub-aura" x="226" y="71" width="68" height="48" rx="7" fill="none" stroke="var(--orange)" stroke-width="1" opacity="0"/>
+    <rect class="hub-aura" x="218" y="66" width="84" height="58" rx="7" fill="none" stroke="var(--orange)" stroke-width="1" opacity="0"/>
    </g>
 
-   <!-- VP + treasurer — glass style -->
+   <!-- VP -- blue glass, slightly larger -->
    <g class="b-node bn2">
-    <rect x="186" y="130" width="60" height="40" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-    <text x="216" y="155" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em">VP</text>
+    <rect x="180" y="126" width="72" height="48" rx="5" fill="rgba(30,90,138,0.08)" stroke="rgba(30,90,138,0.25)" stroke-width="1"/>
+    <text x="216" y="150" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em" font-weight="600">VP</text>
+    <text x="216" y="164" font-family="'IBM Plex Mono',monospace" font-size="7" fill="rgba(30,90,138,0.6)" text-anchor="middle" letter-spacing="0.08em">Marc L.</text>
    </g>
    <g class="b-node bn3">
-    <rect x="274" y="130" width="60" height="40" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-    <text x="304" y="155" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em">TRÉSORIER</text>
+    <rect x="268" y="126" width="72" height="48" rx="5" fill="rgba(30,90,138,0.08)" stroke="rgba(30,90,138,0.25)" stroke-width="1"/>
+    <text x="304" y="150" font-family="'IBM Plex Mono',monospace" font-size="10" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em" font-weight="600">TRÉSORIER</text>
+    <text x="304" y="164" font-family="'IBM Plex Mono',monospace" font-size="7" fill="rgba(30,90,138,0.6)" text-anchor="middle" letter-spacing="0.08em">Philippe B.</text>
    </g>
 
-   <!-- bottom row — glass style, slightly staggered vertically for depth -->
+   <!-- bottom row — colored glass variants -->
    <g class="b-node bn4">
-    <rect x="146" y="192" width="52" height="36" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-    <text x="172" y="214" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em">SC</text>
+    <rect x="146" y="194" width="52" height="36" rx="5" fill="rgba(90,114,71,0.08)" stroke="rgba(90,114,71,0.25)" stroke-width="1"/>
+    <text x="172" y="216" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#5A7247" text-anchor="middle" letter-spacing="0.12em" font-weight="600">SC</text>
    </g>
    <g class="b-node bn5">
-    <rect x="234" y="194" width="52" height="36" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-    <text x="260" y="216" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em">CT</text>
+    <rect x="234" y="194" width="52" height="36" rx="5" fill="rgba(230,57,70,0.06)" stroke="rgba(230,57,70,0.20)" stroke-width="1"/>
+    <text x="260" y="216" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--red)" text-anchor="middle" letter-spacing="0.12em" font-weight="600">CT</text>
    </g>
    <g class="b-node bn6">
-    <rect x="322" y="192" width="52" height="36" rx="5" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
-    <text x="348" y="214" font-family="'IBM Plex Mono',monospace" font-size="8" fill="var(--blue)" text-anchor="middle" letter-spacing="0.12em">CP</text>
+    <rect x="322" y="194" width="52" height="36" rx="5" fill="rgba(124,90,158,0.08)" stroke="rgba(124,90,158,0.25)" stroke-width="1"/>
+    <text x="348" y="216" font-family="'IBM Plex Mono',monospace" font-size="9" fill="#7C5A9E" text-anchor="middle" letter-spacing="0.12em" font-weight="600">CP</text>
    </g>
 
-   <!-- labels below with glass text style -->
-   <g font-family="'IBM Plex Mono',monospace" font-size="7" fill="rgba(138,133,128,0.7)" text-anchor="middle" letter-spacing="0.1em">
-    <text class="blab bla1" x="186" y="178" text-anchor="end">VICE-PRÉSIDENT</text>
-    <text class="blab bla2" x="334" y="178" text-anchor="start">TRÉSORIER</text>
-    <text class="blab bla3" x="172" y="240">SECRÉTAIRE</text>
-    <text class="blab bla4" x="260" y="240">COORD. TRANSM.</text>
-    <text class="blab bla5" x="348" y="240">COORD. PARTEN.</text>
+   <!-- labels below with colored style -->
+   <g font-family="'IBM Plex Mono',monospace" font-size="7" fill="rgba(138,133,128,0.6)" text-anchor="middle" letter-spacing="0.1em">
+    <text class="blab bla1" x="180" y="180" text-anchor="end">VICE-PRÉSIDENT</text>
+    <text class="blab bla2" x="340" y="180" text-anchor="start">TRÉSORIER</text>
+    <text class="blab bla3" x="172" y="240" fill="#5A7247">SECRÉTAIRE</text>
+    <text class="blab bla4" x="260" y="240" fill="var(--red)">COORD. TRANSM.</text>
+    <text class="blab bla5" x="348" y="240" fill="#7C5A9E">COORD. PARTEN.</text>
    </g>
 
-   <!-- status -->
+   <!-- status with counter emphasis -->
    <text x="42" y="358" font-family="'IBM Plex Mono',monospace" font-size="9" fill="var(--mute)" letter-spacing="0.1em">
     <tspan fill="var(--lime)">◉</tspan><tspan dx="6">6 MEMBRES · BUREAU ACTIF</tspan>
    </text>
+   
+   <!-- Corner build count -->
+   <text x="470" y="358" font-family="'Space Grotesk',sans-serif" font-size="28" font-weight="700" fill="var(--lime)" text-anchor="end" letter-spacing="-0.02em" opacity="0.6">
+     <tspan>100%</tspan>
+   </text>
+   <text x="470" y="372" font-family="'IBM Plex Mono',monospace" font-size="7" fill="rgba(250,247,242,0.35)" text-anchor="end" letter-spacing="0.08em">BUILDERS</text>
   </svg>
+
+  <!-- Floating counter overlay badge -->
+  <div class="bureau-counter">
+   <div class="counter-num"><span class="counter-digit">6</span></div>
+   <div class="counter-label">
+    Membres<br>
+    <span class="num-highlight">100% builders</span>
+   </div>
+  </div>
+
  </div>
  </div>
  </div>
  </div>
 </section>
 
-<section class="paper">
+<section class="paper" style="padding-top:48px;">
  <div class="container">
  <div class="grid-bureau">
- <div class="member">
+ <div class="member tresorier">
  <div class="photo">PB</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Philippe Baudoux</h3>
- <div class="role">■ Trésorier</div>
- <p class="build">Agents IA, homelab 4 Macs, Qualiopi, deep-research maison</p>
+ <div class="role">Trésorier</div>
+ <p class="build">Agents IA, homelab 4 Macs, Qualiopi, deep-research maison<br>
+  <span class="build-tag">agents</span>
+  <span class="build-tag">homelab</span>
+  <span class="build-tag">qualité</span>
+ </p>
  </div>
  </div>
- <div class="member">
+ <div class="member vp">
  <div class="photo">ML</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Marc Lefebvre</h3>
- <div class="role">■ Vice-président</div>
- <p class="build">RAG local, embeddings maison, benchmarks reproductibles</p>
+ <div class="role">Vice-président</div>
+ <p class="build">RAG local, embeddings maison, benchmarks reproductibles<br>
+  <span class="build-tag">RAG</span>
+  <span class="build-tag">benchmarks</span>
+  <span class="build-tag">open source</span>
+ </p>
  </div>
  </div>
- <div class="member">
+ <div class="member president">
  <div class="photo">AK</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Amélie Kouassi</h3>
- <div class="role">■ Présidente</div>
- <p class="build">MLOps, pipelines d'inférence, monitoring coûts</p>
+ <div class="role">Présidente</div>
+ <p class="build">MLOps, pipelines d'inférence, monitoring coûts<br>
+  <span class="build-tag">MLOps</span>
+  <span class="build-tag">infra</span>
+  <span class="build-tag">monitoring</span>
+ </p>
  </div>
  </div>
- <div class="member">
+ <div class="member secretaire">
  <div class="photo">LT</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Ludovic Tanguy</h3>
- <div class="role">■ Secrétaire</div>
- <p class="build">GPU homelab, souveraineté pratique, écrits terrain</p>
+ <div class="role">Secrétaire</div>
+ <p class="build">GPU homelab, souveraineté pratique, écrits terrain<br>
+  <span class="build-tag">GPU</span>
+  <span class="build-tag">souveraineté</span>
+  <span class="build-tag">écriture</span>
+ </p>
  </div>
  </div>
- <div class="member">
+ <div class="member coord-transmission">
  <div class="photo">JM</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Julie Morel</h3>
- <div class="role">■ Coord. transmission</div>
- <p class="build">Ateliers pratiques, inclusion, programme jeunes</p>
+ <div class="role">Coord. transmission</div>
+ <p class="build">Ateliers pratiques, inclusion, programme jeunes<br>
+  <span class="build-tag">ateliers</span>
+  <span class="build-tag">inclusion</span>
+  <span class="build-tag">jeunes</span>
+ </p>
  </div>
  </div>
- <div class="member">
+ <div class="member coord-partenariats">
  <div class="photo">NG</div>
+ <div class="photo-glow"></div>
  <div class="info">
  <h3>Nicolas Gérard</h3>
- <div class="role">■ Coord. partenariats</div>
- <p class="build">Intégrations enterprise, PME/ETI, retours métier</p>
+ <div class="role">Coord. partenariats</div>
+ <p class="build">Intégrations enterprise, PME/ETI, retours métier<br>
+  <span class="build-tag">enterprise</span>
+  <span class="build-tag">PME</span>
+  <span class="build-tag">métier</span>
+ </p>
  </div>
  </div>
  </div>
